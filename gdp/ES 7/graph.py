@@ -12,7 +12,6 @@ graph1 = {
     'W' : ['B','H','V']
 }
 
-visited = []
 
 def dfs(graph, node, visited):
     if node not in visited:
@@ -23,19 +22,20 @@ def dfs(graph, node, visited):
 
 
 def bfs(graph, root):
-    visited, queue = [root], [root]
+    visited = []
+    queue = [root]
     while queue:
-        vertex = queue.pop(0)
-        for w in graph[vertex]:
-            if w not in visited:
-                visited.append(w)
-                queue.append(w)
+        node = queue.pop(0)
+        if node not in visited:
+            visited.append(node)
+            neighbours = graph[node]
+            for neighbour in neighbours:
+                queue.append(neighbour)
     return visited
 
 
-
-visited2 = bfs(graph1, 'P')
+visited2 = bfs(graph1, 'V')
 print(visited2)
 
-visited = dfs(graph1,'P', [])
+visited = dfs(graph1,'V', [])
 print(visited)
