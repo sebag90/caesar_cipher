@@ -34,8 +34,11 @@ def bfs(graph, root):
     return visited
 
 
-visited2 = bfs(graph1, 'V')
-print(visited2)
+method = input("BFS or DFS? \n>")
 
-visited = dfs(graph1,'V', [])
-print(visited)
+if method in ("BFS", "B", "bfs", "b"):
+    visited2 = bfs(graph1, 'V')
+    print(visited2)
+elif method in ("DFS", "D", "d", "dfs"):
+    visited = dfs(graph1, 'V', [])
+    print(visited)
