@@ -14,27 +14,25 @@ def retrieve_articles():
 
 
 # manual string manipulation
-def clean_string(string_input_list):
-    cleaned_strings = []
-    for stringa in string_input_list:
-        bella = stringa.replace("[", " ")
-        bella = bella.replace("]", " ")
-        bella = bella.replace("(", " ")
-        bella = bella.replace(")", " ")
-        bella = bella.replace(", ", " ")
-        bella = bella.replace(". ", " ")
-        bella = bella.replace("; ", " ")
-        bella = bella.replace(": ", " ")
-        bella = bella.replace("?", " ")
-        bella = bella.replace("!", " ")
-        bella = bella.replace("""  ' """, " ")
-        bella = bella.replace("""  " """, " ")
-        cleaned_strings.append(bella)
-    return cleaned_strings
+def clean_string(stringa):
+    bella = stringa.replace("[", " ")
+    bella = bella.replace("]", " ")
+    bella = bella.replace("(", " ")
+    bella = bella.replace(")", " ")
+    bella = bella.replace(", ", " ")
+    bella = bella.replace(". ", " ")
+    bella = bella.replace("; ", " ")
+    bella = bella.replace(": ", " ")
+    bella = bella.replace("?", " ")
+    bella = bella.replace("!", " ")
+    bella = bella.replace("""  ' """, " ")
+    bella = bella.replace("""  " """, " ")
+    bella = bella.replace(""" „ """, " ")
+    bella = bella.replace("""  “ """, " ")
+    return bella
 
 
 def str_2_vec(input_string):
-    stemmed_strings = []
     # collect stop words after removing whitespaces and /n
     nonowords = []
     with open("stopwords.txt") as stopwords:
@@ -42,22 +40,59 @@ def str_2_vec(input_string):
             newword = word.replace(" ", "")
             newword2 = newword.replace("\n", "")
             nonowords.append(newword2)
-
-    for string in input_string:
-        # extract single words
-        splits = string.split()
-        cleaned = []
-        stemmed = []
-        # if word is not a stop word, save it in a new list (vector)
-        for something in splits:
-            if something.lower() not in nonowords:
-                cleaned.append(something)
-        # stem
-        stemmer = SnowballStemmer("german")
-        for element in cleaned:
-            stemmed.append(stemmer.stem(element))
-        stemmed_strings.append(stemmed)
-    return stemmed_strings
+    # extract single words
+    splits = input_string.split()
+    cleaned = []
+    stemmed = []
+    # if word is not a stop word, save it in a new list (vector)
+    for something in splits:
+        if something.lower() not in nonowords:
+            cleaned.append(something)
+    # stem and create matrix
+    stemmer = SnowballStemmer("german")
+    for element in cleaned:
+        stemmed.append(stemmer.stem(element))
+    return stemmed
 
 
-print(str_2_vec(clean_string(retrieve_articles())))
+def create_matrix_terms(stemmed_lists):
+    matrix_terms = []
+    for single_list in stemmed_lists:
+        for term in single_list:
+            if term not in matrix_terms:
+                matrix_terms.append(term)
+    return matrix_terms
+        
+def calculate_matrix(matrix_terms, stemmed_lists):
+    matrix = []
+    string_vec = []
+    for element in matrix_terms:
+        counter = 0
+        for doc in stemmed_lists:
+            for term in doc:
+                if term == element:
+                    counter = counter + 1
+        string_vec.append(counter)
+    matrix.append(string_vec)
+    return matrix
+
+
+def main():
+    articles = retrieve_articles()
+    cleaned_strs = []
+    for element in articles:
+        new_str = clean_string(element)
+        cleaned_strs.append(new_str)
+    
+    stemmed_lists = []
+    for cleaned_string in cleaned_strs:
+        stemmed_lists.append(str_2_vec(cleaned_string))
+    
+    matrix_terms = create_matrix_terms(stemmed_lists)
+    matrix = calculate_matrix(matrix_terms, stemmed_lists)
+    
+    print(matrix)
+
+
+if __name__ == "__main__":
+    main()
