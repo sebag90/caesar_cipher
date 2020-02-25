@@ -14,40 +14,50 @@ def retrieve_articles():
 
 
 # manual string manipulation
-def clean_string(ciao):
+def clean_string(string_input_list):
     cleaned_strings = []
-    for stringa in ciao:
-        bella = stringa.replace(", ", " ")
+    for stringa in string_input_list:
+        bella = stringa.replace("[", " ")
+        bella = bella.replace("]", " ")
+        bella = bella.replace("(", " ")
+        bella = bella.replace(")", " ")
+        bella = bella.replace(", ", " ")
         bella = bella.replace(". ", " ")
         bella = bella.replace("; ", " ")
         bella = bella.replace(": ", " ")
         bella = bella.replace("?", " ")
         bella = bella.replace("!", " ")
+        bella = bella.replace("""  ' """, " ")
+        bella = bella.replace("""  " """, " ")
         cleaned_strings.append(bella)
     return cleaned_strings
 
 
 def str_2_vec(input_string):
-    # extract single words
-    splits = input_string.split()
-    cleaned = []
-    nonowords = []
-    stemmed = []
+    stemmed_strings = []
     # collect stop words after removing whitespaces and /n
-   with open("stopwords.txt") as stopwords:
+    nonowords = []
+    with open("stopwords.txt") as stopwords:
         for word in stopwords:
             newword = word.replace(" ", "")
             newword2 = newword.replace("\n", "")
             nonowords.append(newword2)
-    # if word is not a stop word, save it in a new list (vector)
-    for something in splits:
-        if something.lower() not in nonowords:
-            cleaned.append(something)
-    # stem
-    stemmer = SnowballStemmer("german")
-    for element in cleaned:
-        stemmed.append(stemmer.stem(element))
-    return stemmed
+
+    for string in input_string:
+        # extract single words
+        splits = string.split()
+        cleaned = []
+        stemmed = []
+        # if word is not a stop word, save it in a new list (vector)
+        for something in splits:
+            if something.lower() not in nonowords:
+                cleaned.append(something)
+        # stem
+        stemmer = SnowballStemmer("german")
+        for element in cleaned:
+            stemmed.append(stemmer.stem(element))
+        stemmed_strings.append(stemmed)
+    return stemmed_strings
 
 
-print(clean_string(retrieve_articles()))
+print(str_2_vec(clean_string(retrieve_articles())))
