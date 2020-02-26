@@ -123,15 +123,16 @@ def main():
     # retrieve all articles from folder bestand and stopwords
     articles_org = retrieve_articles()
     stopwords = collect_stopwords()
+
     # clean the articles
     for element in articles_org:
         new_str = clean_string(articles_org[element])
         articles_org[element] = new_str
+
     # stem the articles
     for key in articles_org:
         articles_org[key] = str_2_vec(articles_org[key], stopwords)
     
-
     while True:
         user_input =  input("Enter data query or enter '...' to exit:\n> ")
         if user_input == "...":
