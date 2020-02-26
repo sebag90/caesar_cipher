@@ -63,18 +63,15 @@ def create_matrix_terms(stemmed_lists):
                 matrix_terms.append(term)
     return matrix_terms
         
-def calculate_matrix(matrix_terms, stemmed_lists):
-    matrix = []
+def calculate_vec(matrix_terms, stemmed_list):
     string_vec = []
-    for doc in stemmed_lists:
-        for single_term in matrix_terms:
-            counter = 0
-            for term in doc:
-                if single_term == term:
-                    counter = counter + 1
-            string_vec.append(counter)
-        matrix.append(string_vec)
-    return matrix
+    for single_term in matrix_terms:
+        counter = 0 
+        for term in stemmed_list:
+            if single_term == term:
+                counter = counter + 1
+        string_vec.append(counter)
+    return string_vec
 
 
 def main():
@@ -89,12 +86,11 @@ def main():
         stemmed_lists.append(str_2_vec(cleaned_string))
     
     matrix_terms = create_matrix_terms(stemmed_lists)
-    matrix = calculate_matrix(matrix_terms, stemmed_lists)
-    
-    for line in matrix:
-        print(line)
-        print()
-        print()
+    matrix = []
+    for doc in stemmed_lists:
+        vec = calculate_vec(matrix_terms, doc)
+        matrix.append(vec)
+    print(matrix)
         
 if __name__ == "__main__":
     main()
