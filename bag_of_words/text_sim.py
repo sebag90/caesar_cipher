@@ -136,14 +136,7 @@ def main():
         vec = calculate_vec(matrix_terms, articles[key])
         articles[key] = vec
 
-
-    articles = calc_tf_idf(articles, freq_list)
-
-
-    # print (matrix_terms)
-    # for key in articles:
-    #     print(key, "\t",  articles[key])
-    
+    articles = calc_tf_idf(articles, freq_list)   
 
     results = find_best_match(articles)
     print(max(results.items(), key=operator.itemgetter(1))[0])
