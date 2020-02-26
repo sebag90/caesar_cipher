@@ -119,6 +119,9 @@ def find_best_match(_articles):
 def main():
     articles = retrieve_articles()
     stopwords = collect_stopwords()
+    # TODO
+    # 1-process first all documents then add query in while loop 
+    # 2-add support for ENG/ITA
     articles["query"] =  input("Enter data query:\n> ")
     
     for element in articles:
