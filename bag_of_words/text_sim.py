@@ -44,6 +44,7 @@ def collect_stopwords():
             nonowords.append(newword2)
     return nonowords
 
+
 def str_2_vec(input_string, nonowords):
     # extract single words
     splits = input_string.split()
@@ -98,7 +99,7 @@ def calc_tf_idf (_articles, freq_list):
             _articles[key][i] = _articles[key][i] * math.log(n/freq_list[i])
     return _articles
             
-            
+
 def find_best_match(_articles):
     results = {}
     for key in _articles:
@@ -110,7 +111,7 @@ def find_best_match(_articles):
                 pprod = pprod + _articles[key][i] * _articles["query"][i] 
                 ln = ln + ((_articles[key][i])**2)
                 lq = lq + ((_articles["query"][i])**2)
-            cos = pprod# / math.sqrt(ln * lq)
+            cos = pprod / (1 + math.sqrt(ln * lq))
             results[key] = cos
     return results
             
