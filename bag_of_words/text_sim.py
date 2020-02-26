@@ -4,12 +4,12 @@ import os
 
 # retrieve articles
 def retrieve_articles():
-    strings = []
+    strings = {}
     for filename in os.listdir('./bestand'):
         path = "./bestand/" + filename
         with open(path, "r") as file:
             my_string = file.read()
-            strings.append(my_string)
+            strings[filename] = my_string
     return strings
 
 
@@ -55,10 +55,10 @@ def str_2_vec(input_string):
     return stemmed
 
 
-def create_matrix_terms(stemmed_lists):
+def create_matrix_terms(_articles):
     matrix_terms = []
-    for single_list in stemmed_lists:
-        for term in single_list:
+    for key in _articles:
+        for term in _articles[key]:
             if term not in matrix_terms:
                 matrix_terms.append(term)
     return matrix_terms
@@ -76,21 +76,23 @@ def calculate_vec(matrix_terms, stemmed_list):
 
 def main():
     articles = retrieve_articles()
-    cleaned_strs = []
+    
     for element in articles:
-        new_str = clean_string(element)
-        cleaned_strs.append(new_str)
+        new_str = clean_string(articles[element])
+        articles[element] = new_str
+     
+    for key in articles:
+        articles[key] = str_2_vec(articles[key])
     
-    stemmed_lists = []
-    for cleaned_string in cleaned_strs:
-        stemmed_lists.append(str_2_vec(cleaned_string))
-    
-    matrix_terms = create_matrix_terms(stemmed_lists)
-    matrix = []
-    for doc in stemmed_lists:
-        vec = calculate_vec(matrix_terms, doc)
-        matrix.append(vec)
-    print(matrix)
+    matrix_terms = create_matrix_terms(articles)
+     
+    for key in articles:
+        vec = calculate_vec(matrix_terms, articles[key])
+        articles[key] = vec
+
+    print(matrix_terms)
+    for key in articles:
+        print(key, articles[key])
         
 if __name__ == "__main__":
     main()
