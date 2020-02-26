@@ -91,7 +91,7 @@ def calc_freq(_articles, matrix_terms):
 def calc_tf_idf (_articles, freq_list):
     n = len(_articles)
     for key in _articles:
-        for i in range(len(_articles[key])):
+        for i in range(len(freq_list)):
             _articles[key][i] = _articles[key][i] * math.log(n/freq_list[i])
     return _articles
             
@@ -104,9 +104,9 @@ def find_best_match(_articles):
             ln = 0
             for i in range(len(_articles[key])):
                 pprod = pprod + _articles[key][i] * _articles["query"][i] 
-                ln = ln + (_articles[key][i]**2)
-                lq = lq + (_articles["query"][i]**2)
-            cos = pprod / math.sqrt(ln * lq)
+                ln = ln + ((_articles[key][i])**2)
+                lq = lq + ((_articles["query"][i])**2)
+            cos = pprod# / math.sqrt(ln * lq)
             results[key] = cos
     return results
             
@@ -131,14 +131,16 @@ def main():
         vec = calculate_vec(matrix_terms, articles[key])
         articles[key] = vec
 
-    # print(matrix_terms)
-    # for key in articles:
-    #     print(key, "\t",  articles[key])
-    # print (freq_list)
 
     articles = calc_tf_idf(articles, freq_list)
-    results = find_best_match(articles)
 
+
+    # print (matrix_terms)
+    # for key in articles:
+    #     print(key, "\t",  articles[key])
+    
+
+    results = find_best_match(articles)
     print(max(results.items(), key=operator.itemgetter(1))[0])
     
 
