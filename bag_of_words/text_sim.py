@@ -68,6 +68,7 @@ def create_matrix_terms(_articles):
                 matrix_terms.append(term)
     return matrix_terms
         
+
 def calculate_vec(matrix_terms, stemmed_list):
     string_vec = []
     for single_term in matrix_terms:
@@ -77,6 +78,7 @@ def calculate_vec(matrix_terms, stemmed_list):
                 counter = counter + 1
         string_vec.append(counter)
     return string_vec
+
 
 def calc_freq(_articles, matrix_terms):
     counters = []
@@ -88,12 +90,14 @@ def calc_freq(_articles, matrix_terms):
         counters.append(counter)
     return counters
 
+
 def calc_tf_idf (_articles, freq_list):
     n = len(_articles)
     for key in _articles:
         for i in range(len(freq_list)):
             _articles[key][i] = _articles[key][i] * math.log(n/freq_list[i])
     return _articles
+            
             
 def find_best_match(_articles):
     results = {}
