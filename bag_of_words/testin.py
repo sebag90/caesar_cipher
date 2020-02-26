@@ -1,10 +1,3 @@
-def listing():
-    mylist = ["1", "3", "tua mamma"]
-    return mylist
-
-def printing(stringa):
-    print(stringa)
-
-
-for element in listing():
-    printing(element)
+mylist = ["1", "3", "tua mamma"]
+if "3" in mylist:
+    print("hello")  
