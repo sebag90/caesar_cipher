@@ -47,34 +47,34 @@ def main():
                 if term in matrix_terms:
                     input_present = True
             if input_present == False:
-                print("Warning: the suggested result may not be what you are looking for\n")
+                print("no match found\n")
+            else:
+                articles["query"] = stemmed_input
+                # TODO: modify create_matrix_terms to perform it based on list 
+                # as input + list if already exists to avoid double matrix term creation of dict
 
-            articles["query"] = stemmed_input
-            # TODO: modify create_matrix_terms to perform it based on list 
-            # as input + list if already exists to avoid double matrix term creation of dict
+                # create document matrix terms
+                matrix_terms = fn.create_matrix_terms(articles)
 
-            # create document matrix terms
-            matrix_terms = fn.create_matrix_terms(articles)
+                # calculate frequency list for every term 
+                freq_list = fn.calc_freq(articles, matrix_terms)
+                for key in articles:
+                    vec = fn.calculate_vec(matrix_terms, articles[key])
+                    articles[key] = vec
 
-            # calculate frequency list for every term 
-            freq_list = fn.calc_freq(articles, matrix_terms)
-            for key in articles:
-                vec = fn.calculate_vec(matrix_terms, articles[key])
-                articles[key] = vec
+                # uncomment to check for stemming of documents
+                # for key in articles:
+                #     print(key, "\t", articles[key])
+                
+                # uncomment to check for stemmed matrix terms
+                # print(matrix_terms)
 
-            # uncomment to check for stemming of documents
-            # for key in articles:
-            #     print(key, "\t", articles[key])
-            
-            # uncomment to check for stemmed matrix terms
-            # print(matrix_terms)
+                # calculate TF * IFD (1 - log(n/nj))
+                articles = fn.calc_tf_idf(articles, freq_list)   
 
-            # calculate TF * IFD (1 - log(n/nj))
-            articles = fn.calc_tf_idf(articles, freq_list)   
-
-            # calculate vector cos similarity and print out the best result
-            results = fn.find_best_match(articles)
-            print("Best result: ", max(results.items(), key=operator.itemgetter(1))[0], "\n")
+                # calculate vector cos similarity and print out the best result
+                results = fn.find_best_match(articles)
+                print("Best result: ", max(results.items(), key=operator.itemgetter(1))[0], "\n")
         else:
             print("Sorry, try with another query")
     
