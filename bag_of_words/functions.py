@@ -9,8 +9,8 @@ import math
 # retrieve articles
 def retrieve_articles():
     strings = {}
-    for filename in os.listdir('./testbestand'):
-        path = "./testbestand/" + filename
+    for filename in os.listdir('./bestand'):
+        path = "./bestand/" + filename
         with open(path, "r") as file:
             my_string = file.read()
             strings[filename] = my_string

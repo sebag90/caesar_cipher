@@ -50,12 +50,12 @@ def main():
                 print("Warning: the suggested result may not be what you are looking for\n")
 
             articles["query"] = stemmed_input
-            # TODO: modify create_matrix_terms to perform it based on list as input + list if already exists to avoid double matrix term creation of dict
+            # TODO: modify create_matrix_terms to perform it based on list 
+            # as input + list if already exists to avoid double matrix term creation of dict
+
             # create document matrix terms
             matrix_terms = fn.create_matrix_terms(articles)
 
-            
-            
             # calculate frequency list for every term 
             freq_list = fn.calc_freq(articles, matrix_terms)
             for key in articles:
