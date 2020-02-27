@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from cistem import stem
+import cistem as cistem
 import os
 import math          
 # from nltk.stem.snowball import SnowballStemmer
@@ -61,7 +61,7 @@ def str_2_vec(input_string, nonowords):
     # stemmer = SnowballStemmer("german")
     for element in cleaned:
         # stemmed.append(stemmer.stem(element))
-        stemmed.append(stem(element))
+        stemmed.append(cistem.stem(element))
     return stemmed
 
 
