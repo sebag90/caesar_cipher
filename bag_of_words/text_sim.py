@@ -17,22 +17,22 @@ def retrieve_articles():
 
 
 # manual string manipulation
-def clean_string(stringa):
-    bella = stringa.replace("[", " ")
-    bella = bella.replace("]", " ")
-    bella = bella.replace("(", " ")
-    bella = bella.replace(")", " ")
-    bella = bella.replace(", ", " ")
-    bella = bella.replace(". ", " ")
-    bella = bella.replace("; ", " ")
-    bella = bella.replace(": ", " ")
-    bella = bella.replace("?", " ")
-    bella = bella.replace("!", " ")
-    bella = bella.replace("""'""", " ")
-    bella = bella.replace('"', " ")
-    bella = bella.replace("""„""", " ")
-    bella = bella.replace("""“""", " ")
-    return bella
+def clean_string(input_str):
+    cln_str = input_str.replace("[", " ")
+    cln_str = cln_str.replace("]", " ")
+    cln_str = cln_str.replace("(", " ")
+    cln_str = cln_str.replace(")", " ")
+    cln_str = cln_str.replace(", ", " ")
+    cln_str = cln_str.replace(". ", " ")
+    cln_str = cln_str.replace("; ", " ")
+    cln_str = cln_str.replace(": ", " ")
+    cln_str = cln_str.replace("?", " ")
+    cln_str = cln_str.replace("!", " ")
+    cln_str = cln_str.replace("""'""", " ")
+    cln_str = cln_str.replace('"', " ")
+    cln_str = cln_str.replace("""„""", " ")
+    cln_str = cln_str.replace("""“""", " ")
+    return cln_str
 
 
 # collect stop words after removing whitespaces and /n
@@ -45,6 +45,7 @@ def collect_stopwords():
             nonowords.append(newword2)
     return nonowords
 
+
 # remove stopwords and stem a string
 def str_2_vec(input_string, nonowords):
     # extract single words
@@ -55,11 +56,12 @@ def str_2_vec(input_string, nonowords):
     for something in splits:
         if something.lower() not in nonowords:
             cleaned.append(something)
-    # stem and create matrix
+    # stem
     stemmer = SnowballStemmer("german")
     for element in cleaned:
         stemmed.append(stemmer.stem(element))
     return stemmed
+
 
 # create matrix term list
 def create_matrix_terms(_articles):
@@ -70,6 +72,7 @@ def create_matrix_terms(_articles):
                 matrix_terms.append(term)
     return matrix_terms
         
+
 # calculate TF vector for every stemmed document
 def calculate_vec(matrix_terms, stemmed_list):
     string_vec = []
@@ -80,6 +83,7 @@ def calculate_vec(matrix_terms, stemmed_list):
                 counter = counter + 1
         string_vec.append(counter)
     return string_vec
+
 
 # calculate the number of document in which every term is present
 def calc_freq(_articles, matrix_terms):
@@ -92,6 +96,7 @@ def calc_freq(_articles, matrix_terms):
         counters.append(counter)
     return counters
 
+
 # calculate TF * IDF (1 + log(n/nj))
 def calc_tf_idf (_articles, freq_list):
     n = len(_articles)
@@ -99,20 +104,22 @@ def calc_tf_idf (_articles, freq_list):
         for i in range(len(freq_list)):
             _articles[key][i] = _articles[key][i] * (1 + math.log(n/freq_list[i]))
     return _articles
-            
+
+
 # calculate cos similarity
 def find_best_match(_articles):
     results = {}
     for key in _articles:
         if key != "query":
+            # point product, length vector query, length vector n
             pprod = 0
-            lq = 0
-            ln = 0
+            len_q = 0
+            len_n = 0
             for i in range(len(_articles[key])):
                 pprod = pprod + _articles[key][i] * _articles["query"][i] 
-                ln = ln + ((_articles[key][i])**2)
-                lq = lq + ((_articles["query"][i])**2)
-            cos = pprod / math.sqrt(ln * lq)
+                len_n = len_n + ((_articles[key][i])**2)
+                len_q = len_q + ((_articles["query"][i])**2)
+            cos = pprod / math.sqrt(len_n * len_q)
             results[key] = cos
     return results
             
