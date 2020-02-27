@@ -38,11 +38,24 @@ def main():
         stemmed_input = fn.str_2_vec(cleaned_input, stopwords)
        
         if len(stemmed_input) != 0:
-            articles["query"] = stemmed_input
-            
             # create document matrix terms
             matrix_terms = fn.create_matrix_terms(articles)
 
+            # warning if stemmed query not in stemmed matrix terms
+            input_present = False
+            for term in stemmed_input:
+                if term in matrix_terms:
+                    input_present = True
+            if input_present == False:
+                print("Warning: the suggested result may not be what you are looking for\n")
+
+            articles["query"] = stemmed_input
+            # TODO: modify create_matrix_terms to perform it based on list as input + list if already exists to avoid double matrix term creation of dict
+            # create document matrix terms
+            matrix_terms = fn.create_matrix_terms(articles)
+
+            
+            
             # calculate frequency list for every term 
             freq_list = fn.calc_freq(articles, matrix_terms)
             for key in articles:
@@ -61,7 +74,7 @@ def main():
 
             # calculate vector cos similarity and print out the best result
             results = fn.find_best_match(articles)
-            print(max(results.items(), key=operator.itemgetter(1))[0])
+            print("Best result: ", max(results.items(), key=operator.itemgetter(1))[0], "\n")
         else:
             print("Sorry, try with another query")
     
