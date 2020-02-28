@@ -59,9 +59,7 @@ def str_2_vec(input_string, nonowords, language, de_stemmer):
             cleaned.append(something)
     # stem
     if de_stemmer == "cistem":
-        # stemmer = SnowballStemmer("german")
         for element in cleaned:
-            # stemmed.append(stemmer.stem(element))
             stemmed.append(cistem.stem(element))
     else:
         stemmer = SnowballStemmer(language)

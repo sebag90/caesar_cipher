@@ -6,10 +6,11 @@ import copy
  
             
 def main():
+    #select language + stemmer
     lang_input = input("Select a language (DE - ITA - EN)\n> ")
     if lang_input.lower() in ("deutsch", "d", "de", "german"):
         language = "german"
-        de_stemmer_inp = input("Which stemmer would you like to use, CISTEM or SnowBall?")
+        de_stemmer_inp = input("Which stemmer would you like to use, CISTEM or SnowBall?\n> ")
         if de_stemmer_inp.lower() in ("cistem", "cis", "c"):
             print("you selected the CISTEM stemmer")
             de_stemmer = "cistem"
@@ -24,8 +25,6 @@ def main():
         de_stemmer = "snowball"
     else:
         print("the selected language is not supported")
-    # TODO
-    # add support for ENG/ITA
     
     # retrieve all articles from folder bestand and stopwords
     articles_org = fn.retrieve_articles()
