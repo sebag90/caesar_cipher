@@ -39,7 +39,9 @@ def main():
        
         if len(stemmed_input) != 0:
             # create document matrix terms
-            matrix_terms = fn.create_matrix_terms(articles)
+            matrix_terms = []
+            for key in articles:
+                matrix_terms = fn.create_matrix_terms(matrix_terms, articles[key])
 
             # warning if stemmed query not in stemmed matrix terms
             input_present = False
@@ -50,11 +52,9 @@ def main():
                 print("no match found\n")
             else:
                 articles["query"] = stemmed_input
-                # TODO: modify create_matrix_terms to perform it based on list 
-                # as input + list if already exists to avoid double matrix term creation of dict
 
-                # create document matrix terms
-                matrix_terms = fn.create_matrix_terms(articles)
+                # add stemmed query to matrix terms
+                matrix_terms = fn.create_matrix_terms(matrix_terms, stemmed_input)
 
                 # calculate frequency list for every term 
                 freq_list = fn.calc_freq(articles, matrix_terms)

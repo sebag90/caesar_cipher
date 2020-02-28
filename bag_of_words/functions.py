@@ -49,8 +49,8 @@ def retrieve_articles():
 
 
 # manual string manipulation
-def clean_string(input_str):
-    cln_str = input_str.replace("[", " ")
+def clean_string(_input_str):
+    cln_str = _input_str.replace("[", " ")
     cln_str = cln_str.replace("]", " ")
     cln_str = cln_str.replace("(", " ")
     cln_str = cln_str.replace(")", " ")
@@ -79,14 +79,14 @@ def collect_stopwords():
 
 
 # remove stopwords and stem a string
-def str_2_vec(input_string, nonowords, _lang_stemm):
+def str_2_vec(_input_string, _nonowords, _lang_stemm):
     # extract single words
-    splits = input_string.split()
+    splits = _input_string.split()
     cleaned = []
     stemmed = []
     # if word is not a stop word, save it in a new list (vector)
     for something in splits:
-        if something.lower() not in nonowords:
+        if something.lower() not in _nonowords:
             cleaned.append(something)
     # stem
     if _lang_stemm["stemmer"] == "cistem":
@@ -101,21 +101,19 @@ def str_2_vec(input_string, nonowords, _lang_stemm):
 
 
 # create matrix term list
-def create_matrix_terms(_articles):
-    matrix_terms = []
-    for key in _articles:
-        for term in _articles[key]:
-            if term not in matrix_terms:
-                matrix_terms.append(term)
-    return matrix_terms
+def create_matrix_terms(_matrix_terms, _article):
+    for term in _article:
+        if term not in _matrix_terms:
+            _matrix_terms.append(term)
+    return _matrix_terms
         
 
 # calculate TF vector for every stemmed document
-def calculate_vec(matrix_terms, stemmed_list):
+def calculate_vec(_matrix_terms, _stemmed_list):
     string_vec = []
-    for single_term in matrix_terms:
+    for single_term in _matrix_terms:
         counter = 0 
-        for term in stemmed_list:
+        for term in _stemmed_list:
             if single_term == term:
                 counter = counter + 1
         string_vec.append(counter)
@@ -123,9 +121,9 @@ def calculate_vec(matrix_terms, stemmed_list):
 
 
 # calculate the number of document in which every term is present
-def calc_freq(_articles, matrix_terms):
+def calc_freq(_articles, _matrix_terms):
     counters = []
-    for term in matrix_terms:
+    for term in _matrix_terms:
         counter = 0
         for key in _articles:
             if term in _articles[key]:
@@ -135,11 +133,11 @@ def calc_freq(_articles, matrix_terms):
 
 
 # calculate TF * IDF (1 + log(n/nj))
-def calc_tf_idf (_articles, freq_list):
+def calc_tf_idf (_articles, _freq_list):
     n = len(_articles)
     for key in _articles:
-        for i in range(len(freq_list)):
-            _articles[key][i] = _articles[key][i] * (1 + math.log(n/freq_list[i]))
+        for i in range(len(_freq_list)):
+            _articles[key][i] = _articles[key][i] * (1 + math.log(n/_freq_list[i]))
     return _articles
 
 
