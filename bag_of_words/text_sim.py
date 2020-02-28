@@ -7,24 +7,7 @@ import copy
             
 def main():
     #select language + stemmer
-    lang_input = input("Select a language (DE - ITA - EN)\n> ")
-    if lang_input.lower() in ("deutsch", "d", "de", "german"):
-        language = "german"
-        de_stemmer_inp = input("Which stemmer would you like to use, CISTEM or SnowBall?\n> ")
-        if de_stemmer_inp.lower() in ("cistem", "cis", "c"):
-            print("you selected the CISTEM stemmer")
-            de_stemmer = "cistem"
-        elif de_stemmer_inp.lower() in ("snowball", "snow", "ball", "s"):
-            print("you selected the SnowBall Stemmer")
-            de_stemmer = "snowball"
-    elif lang_input.lower() in ("italian", "it", "ita", "i"):
-        language = "italian"
-        de_stemmer = "snowball"
-    elif lang_input.lower() in ("english", "en", "e", "eng"):
-        language = "english"
-        de_stemmer = "snowball"
-    else:
-        print("the selected language is not supported")
+    lang_stemm_input = fn.lang_stemm()
     
     # retrieve all articles from folder bestand and stopwords
     articles_org = fn.retrieve_articles()
@@ -37,7 +20,7 @@ def main():
 
     # stem the articles
     for key in articles_org:
-        articles_org[key] = fn.str_2_vec(articles_org[key], stopwords, language, de_stemmer)
+        articles_org[key] = fn.str_2_vec(articles_org[key], stopwords, lang_stemm_input)
 
     # uncomment to check for stemming of documents
     # for key in articles_org:
@@ -52,7 +35,7 @@ def main():
 
         # clean and stem user input
         cleaned_input = fn.clean_string(user_input)
-        stemmed_input = fn.str_2_vec(cleaned_input, stopwords, language, de_stemmer)
+        stemmed_input = fn.str_2_vec(cleaned_input, stopwords, lang_stemm_input)
        
         if len(stemmed_input) != 0:
             # create document matrix terms

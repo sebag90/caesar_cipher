@@ -5,6 +5,37 @@ import os
 import math          
 from nltk.stem.snowball import SnowballStemmer
 
+# select a language and a stemmer (ITA and EN only Snowball, DE also CISTEM)
+def lang_stemm():
+    language = ""
+    de_stemmer = ""
+    _lang_stemm = {}
+    while language == "":
+        lang_input = input("Select a language (DE - ITA - EN)\n> ")
+        if lang_input.lower() in ("deutsch", "d", "de", "german"):
+            language = "german"
+            while de_stemmer == "":
+                de_stemmer_inp = input("Which stemmer would you like to use, CISTEM or SnowBall?\n> ")
+                if de_stemmer_inp.lower() in ("cistem", "cis", "c"):
+                    print("you selected the CISTEM stemmer")
+                    de_stemmer = "cistem"
+                elif de_stemmer_inp.lower() in ("snowball", "snow", "ball", "s"):
+                    print("you selected the SnowBall Stemmer")
+                    de_stemmer = "snowball"
+                else:
+                    print("sorry try again")
+        elif lang_input.lower() in ("italian", "it", "ita", "i"):
+            language = "italian"
+            de_stemmer = "snowball"
+        elif lang_input.lower() in ("english", "en", "e", "eng"):
+            language = "english"
+            de_stemmer = "snowball"
+        else:
+            print("the selected language is not supported")
+    
+    _lang_stemm["language"] = language
+    _lang_stemm["stemmer"] = de_stemmer
+    return _lang_stemm
 
 # retrieve articles
 def retrieve_articles():
@@ -48,7 +79,7 @@ def collect_stopwords():
 
 
 # remove stopwords and stem a string
-def str_2_vec(input_string, nonowords, language, de_stemmer):
+def str_2_vec(input_string, nonowords, _lang_stemm):
     # extract single words
     splits = input_string.split()
     cleaned = []
@@ -58,11 +89,11 @@ def str_2_vec(input_string, nonowords, language, de_stemmer):
         if something.lower() not in nonowords:
             cleaned.append(something)
     # stem
-    if de_stemmer == "cistem":
+    if _lang_stemm["stemmer"] == "cistem":
         for element in cleaned:
             stemmed.append(cistem.stem(element))
     else:
-        stemmer = SnowballStemmer(language)
+        stemmer = SnowballStemmer(_lang_stemm["language"])
         for element in cleaned:
             stemmed.append(stemmer.stem(element))
        
