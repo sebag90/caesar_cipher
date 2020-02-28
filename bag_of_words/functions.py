@@ -3,7 +3,7 @@
 import cistem as cistem
 import os
 import math          
-# from nltk.stem.snowball import SnowballStemmer
+from nltk.stem.snowball import SnowballStemmer
 
 
 # retrieve articles
@@ -48,7 +48,7 @@ def collect_stopwords():
 
 
 # remove stopwords and stem a string
-def str_2_vec(input_string, nonowords):
+def str_2_vec(input_string, nonowords, language, de_stemmer):
     # extract single words
     splits = input_string.split()
     cleaned = []
@@ -58,10 +58,16 @@ def str_2_vec(input_string, nonowords):
         if something.lower() not in nonowords:
             cleaned.append(something)
     # stem
-    # stemmer = SnowballStemmer("german")
-    for element in cleaned:
-        # stemmed.append(stemmer.stem(element))
-        stemmed.append(cistem.stem(element))
+    if de_stemmer == "cistem":
+        # stemmer = SnowballStemmer("german")
+        for element in cleaned:
+            # stemmed.append(stemmer.stem(element))
+            stemmed.append(cistem.stem(element))
+    else:
+        stemmer = SnowballStemmer(language)
+        for element in cleaned:
+            stemmed.append(stemmer.stem(element))
+       
     return stemmed
 
 
