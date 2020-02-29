@@ -22,7 +22,7 @@ def main():
     for key in articles_org:
         articles_org[key] = fn.str_2_vec(articles_org[key], stopwords, lang_stemm_input)
 
-    # uncomment to check for stemming of documents
+    # uncomment to check stemming of documents
     # for key in articles_org:
     #     print(key, "\t", articles_org[key])
     
@@ -62,11 +62,11 @@ def main():
                     vec = fn.calculate_vec(matrix_terms, articles[key])
                     articles[key] = vec
 
-                # uncomment to check for stemming of documents
+                # uncomment to check stemming of documents + query
                 # for key in articles:
                 #     print(key, "\t", articles[key])
                 
-                # uncomment to check for stemmed matrix terms
+                # uncomment to check stemmed matrix terms
                 # print(matrix_terms)
 
                 # calculate TF * IFD (1 - log(n/nj))
