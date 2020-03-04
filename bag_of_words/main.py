@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from datetime import datetime
 import functions as fn
 import operator
 import copy
@@ -8,7 +9,7 @@ import copy
 def main():
     #select language + stemmer
     lang_stemm_input = fn.lang_stemm()
-    
+
     # retrieve all articles from folder bestand and stopwords
     articles_org = fn.retrieve_articles()
     stopwords = fn.collect_stopwords()
@@ -38,8 +39,12 @@ def main():
         stemmed_input = fn.str_2_vec(cleaned_input, stopwords, lang_stemm_input)
        
         if len(stemmed_input) != 0:
+
+            # timer matrix term set instead of list
+            # startTime = datetime.now()
+
             # create document matrix terms
-            matrix_terms = []
+            matrix_terms = set()
             for key in articles:
                 matrix_terms = fn.create_matrix_terms(matrix_terms, articles[key])
 
@@ -62,6 +67,9 @@ def main():
                     vec = fn.calculate_vec(matrix_terms, articles[key])
                     articles[key] = vec
 
+                # end timer matrixterm set instead of list
+                # print(datetime.now() - startTime)
+
                 # uncomment to check stemming of documents + query
                 # for key in articles:
                 #     print(key, "\t", articles[key])
@@ -75,6 +83,7 @@ def main():
                 # calculate vector cos similarity and print out the best result
                 results = fn.find_best_match(articles)
                 print("Best result: ", max(results.items(), key=operator.itemgetter(1))[0], "\n")
+                # print(datetime.now() - startTime)
         else:
             print("Sorry, try with another query")
     

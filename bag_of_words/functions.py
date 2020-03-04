@@ -69,12 +69,12 @@ def clean_string(_input_str):
 
 # collect stop words after removing whitespaces and /n
 def collect_stopwords():
-    nonowords = []
+    nonowords = set()
     with open("stopwords.txt") as stopwords:
         for word in stopwords:
             newword = word.replace(" ", "")
             newword2 = newword.replace("\n", "")
-            nonowords.append(newword2)
+            nonowords.add(newword2.lower())
     return nonowords
 
 
@@ -104,7 +104,7 @@ def str_2_vec(_input_string, _nonowords, _lang_stemm):
 def create_matrix_terms(_matrix_terms, _article):
     for term in _article:
         if term not in _matrix_terms:
-            _matrix_terms.append(term)
+            _matrix_terms.add(term)
     return _matrix_terms
         
 
