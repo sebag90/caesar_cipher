@@ -66,7 +66,7 @@ def main():
                 for key in articles:
                     vec = fn.calculate_vec(matrix_terms, articles[key])
                     articles[key] = vec
-
+                
                 # end timer matrixterm set instead of list
                 # print(datetime.now() - startTime)
 
