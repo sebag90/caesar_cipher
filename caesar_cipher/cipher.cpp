@@ -14,6 +14,7 @@ void show_options(){
                 << std::endl;
 }
 
+
 std::vector <char> create_alphabet(std::vector <char> v, int k){
     std::vector <char> b;
     for (int i=v.size() - k; i <= v.size() - 1; i++){
@@ -40,6 +41,7 @@ std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vect
     }
     return message;
 }
+
 
 std::string decipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip){
     std::string message;
