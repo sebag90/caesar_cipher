@@ -30,7 +30,7 @@ std::vector <char> create_alphabet(std::vector <char> v, int k){
 std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip){
     std::string message;
     for (int i=0; i<input_s.size(); i++){
-        if (ispunct(input_s[i]) || isspace(input_s[i])){
+        if (ispunct(input_s[i]) || isspace(input_s[i]) || isdigit(input_s[i])){
             message.push_back(input_s[i]);
         }
         for (int j=0; j<alphb_real.size(); j++){
@@ -46,7 +46,7 @@ std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vect
 std::string decipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip){
     std::string message;
     for (int i=0; i<input_s.size(); i++){
-        if (ispunct(input_s[i]) || isspace(input_s[i])){
+        if (ispunct(input_s[i]) || isspace(input_s[i]) || isdigit(input_s[i])){
             message.push_back(input_s[i]);
         }
         for (int j=0; j<alphb_real.size(); j++){
