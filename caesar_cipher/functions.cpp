@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 
 
 void show_options(){
@@ -55,4 +56,28 @@ std::string decipher(std::string input_s, std::vector <char> alphb_real, std::ve
         }
     }
     return message;
+}
+
+std::string take_input_string(){
+    std::string a;
+    getline(std::cin, a);
+    return a;
+}
+
+int take_input_key(){
+    int a;
+    std::cin>>a;
+    while(1){
+        if(std::cin.fail() || a < 0 || a > 26){
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits <std::streamsize> ::max(),'\n');
+            std::cout << "You have entered wrong input\n> ";
+            std::cin>>a;
+        }
+        if(!std::cin.fail() && a > 0 && a < 26){
+            break;
+        }
+    }
+    std::cout << "Entered key: " << a << std::endl;
+    return a;
 }

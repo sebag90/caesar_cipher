@@ -15,4 +15,8 @@ std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vect
 
 std::string decipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip);
 
+std::string take_input_string();
+
+int take_input_key();
+
 #endif 
