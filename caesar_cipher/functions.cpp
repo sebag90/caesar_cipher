@@ -34,8 +34,13 @@ std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vect
             message.push_back(input_s[i]);
         }
         for (int j=0; j<alphb_real.size(); j++){
-            if (input_s[i] == alphb_cip[j]){
-                message.push_back(alphb_real[j]);
+            if (tolower(input_s[i]) == alphb_cip[j]){
+                if (isupper(input_s[i])){
+                    message.push_back(toupper(alphb_real[j]));
+                }
+                else{
+                    message.push_back(alphb_real[j]);
+                }
             }
         }
     }
@@ -50,8 +55,13 @@ std::string decipher(std::string input_s, std::vector <char> alphb_real, std::ve
             message.push_back(input_s[i]);
         }
         for (int j=0; j<alphb_real.size(); j++){
-            if (input_s[i] == alphb_real[j]){
-                message.push_back(alphb_cip[j]);
+            if (tolower(input_s[i]) == alphb_real[j]){
+                if (isupper(input_s[i])){
+                    message.push_back(toupper(alphb_cip[j]));
+                }
+                else{
+                    message.push_back(alphb_cip[j]);
+                }
             }
         }
     }
