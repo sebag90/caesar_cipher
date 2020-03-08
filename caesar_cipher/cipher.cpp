@@ -4,7 +4,7 @@
 #include <algorithm>
 
 
-std::string show_options(){
+void show_options(){
     std::cout   << "Options:\n"
                 << "\t-h, --help\t\tshow this\n"
                 << "\t-c, --cipher\t\tencode a message\n"
