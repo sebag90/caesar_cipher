@@ -41,12 +41,14 @@ int main(int argc, char *argv[]){
                 std::cin.ignore();
                 if (key > 0 && key < 26){
                     std::vector <char> cipher_alphabet = create_alphabet(a, key);
-                    if (std::string(argv[1]) == "-cipher"){
+                    if (std::string(argv[1]) == "--cipher" ||
+                        std::string(argv[1]) == "-c"){
                     // if (std::string_view(argv[1]) == "cipher") {    **valid from C++17??
                         std::string output = cipher(input_string, a, cipher_alphabet);
                         std::cout << output << "\n\n";
                     }
-                    else if (std::string(argv[1]) == "-decipher"){
+                    else if (std::string(argv[1]) == "--decipher" ||
+                             std::string(argv[1]) == "-d"){
                         std::string output = decipher(input_string, a, cipher_alphabet);
                         std::cout << output << "\n\n";
                     }
