@@ -13,10 +13,14 @@ int main(int argc, char *argv[]){
     // https://www.bfilipek.com/2019/04/dir-iterate.html#using-c17
     // https://en.cppreference.com/w/cpp/filesystem/directory_iterator
 
-    if (argc < 2){
+
+    if (check_directories("input") == false){
+        create_directories("input");
+    }
+    else if (argc < 2){
         std::cout << "Missing argument!" << std::endl;
         show_options();
-        }
+    }
     else if (argc < 3){
         std::unordered_set <std::string> choice {"-c", "--cipher", "-d", "--decipher"};
         std::unordered_set <std::string> cipher_file_choice {"-cf", "-c -f", "--cipher -f"};
@@ -66,6 +70,9 @@ int main(int argc, char *argv[]){
                 std::cout << "Input folder is empty" << std::endl;
             }
             else{
+                if (check_directories("output") == false){
+                    create_directories("output");
+                }
                 std::cout << "Please enter cipher key (1 - 26)\n> ";
                 int key = take_input_key();
                 std::vector <char> cipher_alphabet = create_alphabet(a, key);

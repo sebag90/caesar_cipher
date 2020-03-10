@@ -21,4 +21,8 @@ int take_input_key();
 
 std::vector<std::string> retrieve_files();
 
+bool check_directories(std::string name);
+
+void create_directories(std::string name);
+
 #endif 

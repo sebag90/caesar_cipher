@@ -4,6 +4,7 @@
 #include <limits>
 #include <dirent.h>
 #include <filesystem>
+#include <unordered_set>
 
 void show_options(){
     std::cout   << "Options:\n"
@@ -79,7 +80,7 @@ int take_input_key(){
     int a;
     std::cin>>a;
     while(1){
-        if(std::cin.fail() || a < 0 || a > 26){
+        if (std::cin.fail() || a < 0 || a > 26){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits <std::streamsize> ::max(),'\n');
             std::cout << "You have entered wrong input\n> ";
@@ -102,4 +103,26 @@ std::vector<std::string> retrieve_files(){
     }
    
 return files;
+}
+
+
+bool check_directories(std::string name){
+    std::unordered_set <std::string> directories;
+    for(auto& p: std::filesystem::directory_iterator(std::filesystem::current_path())){
+        if (p.is_directory()){
+            directories.insert(p.path().filename());
+        }
+    } 
+    if (directories.find(name) != directories.end()){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+void create_directories(std::string name){
+    std::filesystem::create_directories(name);
+    std::cout << name << " directory has been created, you are now ready to go" << std::endl;
 }
