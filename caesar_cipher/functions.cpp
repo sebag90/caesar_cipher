@@ -3,7 +3,7 @@
 #include <string>
 #include <limits>
 #include <dirent.h>
-
+#include <filesystem>
 
 void show_options(){
     std::cout   << "Options:\n"
@@ -94,16 +94,12 @@ int take_input_key(){
 }
 
 // create a vector with filenames
-std::vector<std::string> retrieve_files(std::string path = "./input/"){
-    DIR*    dir;
-    dirent* pdir;
-    std::vector<std::string> files;
+std::vector<std::string> retrieve_files(){
+    std::vector<std::string> files;   
 
-    dir = opendir(path.c_str());
-
-    while (pdir = readdir(dir)) {
-        files.push_back(pdir->d_name);
+    for(auto& p: std::filesystem::directory_iterator("input")){
+        files.push_back(p.path().filename());
     }
-    
-    return files;
+   
+return files;
 }

@@ -19,6 +19,6 @@ std::string take_input_string();
 
 int take_input_key();
 
-std::vector<std::string> retrieve_files(std::string path = "./input/");
+std::vector<std::string> retrieve_files();
 
 #endif 
