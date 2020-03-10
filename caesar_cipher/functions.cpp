@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <limits>
+#include <dirent.h>
 
 
 void show_options(){
@@ -90,4 +91,19 @@ int take_input_key(){
     }
     std::cout << "Entered key: " << a << std::endl;
     return a;
+}
+
+// create a vector with filenames
+std::vector<std::string> retrieve_files(std::string path = "./input/"){
+    DIR*    dir;
+    dirent* pdir;
+    std::vector<std::string> files;
+
+    dir = opendir(path.c_str());
+
+    while (pdir = readdir(dir)) {
+        files.push_back(pdir->d_name);
+    }
+    
+    return files;
 }

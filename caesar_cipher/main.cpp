@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <unordered_set>
+#include <fstream>
 
 #include "functions.hpp"
 
@@ -14,15 +15,19 @@ int main(int argc, char *argv[]){
         show_options();
         }
     else if (argc < 3){
-        std::unordered_set <std::string> choice {"-c", "--cipher", "-d", "--decipher", "-c -f", "-cf", "-d -f", "-df", "--cipher -f", "--decipher -f"};
+        std::unordered_set <std::string> choice {"-c", "--cipher", "-d", "--decipher"};
+        std::unordered_set <std::string> cipher_file_choice {"-cf", "-c -f", "--cipher -f"};
+        std::unordered_set <std::string> decipher_file_choice {"-df", "-d -f", "--decipher -f"};
+        std::vector <char> a {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
+                                  'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 
+                                  's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
         if (std::string(argv[1]) == "--help" ||
             std::string(argv[1]) == "-h"){
             show_options();
         }        
         else if (choice.find(argv[1]) != choice.end()){
-            std::vector <char> a {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-                                  'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
-                                  'u', 'v', 'w', 'x', 'y', 'z'};
+            
             int key;
             while (true){
                 std::cout << "Enter your message or '...' to exit:\n> ";
@@ -48,14 +53,44 @@ int main(int argc, char *argv[]){
                 }
             }
         }
-
-        else if ("file"){
-            // TODO: file support
+        //chipher file
+        else if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end() ||
+                 decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
+            std::cout << "Please enter cipher key (1 - 26)\n> ";
+            int key = take_input_key();
+            std::vector <char> cipher_alphabet = create_alphabet(a, key);
+            std::vector <std::string> my_files;
+            my_files = retrieve_files();
+            for (auto x : my_files){
+                std::ifstream file;
+                file.open("./input/" + x);
+                std::string input_string;
+                std::string input_string2;
+                while(getline(file, input_string2)){
+                    input_string += input_string2 + "\n";
+                }
+                if (!input_string.empty() && input_string[input_string.length()-1] == '\n') {
+                    input_string.erase(input_string.length()-1);
+                }
+                std::string output;
+                if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end()){
+                    output = cipher(input_string, a, cipher_alphabet);
+                }
+                else if (decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
+                    output = decipher(input_string, a, cipher_alphabet);
+                }
+                std::ofstream my_output ("./output/" + x);
+                my_output << output;
+                my_output.close();
+                file.close();
+            }
+            std::cout << "All input files have been succesfully processed" << std::endl;
         }
-        
         else{
-            std::cout << "Invalid option!" << std::endl;
-            show_options();
+        std::cout << "Function not supported\nuse -h or --help for help" << std::endl;
         }
+    }
+    else{
+        std::cout << "Function not supported\nuse -h or --help for help" << std::endl;
     }
 }
