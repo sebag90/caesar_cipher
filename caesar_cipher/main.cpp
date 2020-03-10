@@ -87,10 +87,12 @@ int main(int argc, char *argv[]){
             std::cout << "All input files have been succesfully processed" << std::endl;
         }
         else{
-        std::cout << "Function not supported\nuse -h or --help for help" << std::endl;
+        std::cout << "Function not supported" << std::endl;
+        show_options();
         }
     }
     else{
-        std::cout << "Function not supported\nuse -h or --help for help" << std::endl;
+        std::cout << "Function not supported" << std::endl;
+        show_options();
     }
 }
