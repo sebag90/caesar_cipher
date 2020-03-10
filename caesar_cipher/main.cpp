@@ -9,7 +9,6 @@
 
 int main(int argc, char *argv[]){
 
-    // TODO:add function to create input and output directory if not present
     // https://www.bfilipek.com/2019/04/dir-iterate.html#using-c17
     // https://en.cppreference.com/w/cpp/filesystem/directory_iterator
 
@@ -103,6 +102,12 @@ int main(int argc, char *argv[]){
                 std::cout << "All input files have been succesfully processed" << std::endl;
             }
         }
+        // TODO:implement decipher by bruteforce + frequency analysis
+        // else if (){
+
+        // }
+
+
         else{
         std::cout << "Function not supported" << std::endl;
         show_options();
