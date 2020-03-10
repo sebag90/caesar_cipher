@@ -7,9 +7,12 @@
 #include "functions.hpp"
 
 
-// TODO: add support for files from folder input >> output
-
 int main(int argc, char *argv[]){
+
+    // TODO:add function to create input and output directory if not present
+    // https://www.bfilipek.com/2019/04/dir-iterate.html#using-c17
+    // https://en.cppreference.com/w/cpp/filesystem/directory_iterator
+
     if (argc < 2){
         std::cout << "Missing argument!" << std::endl;
         show_options();
