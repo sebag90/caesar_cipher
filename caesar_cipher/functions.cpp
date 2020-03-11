@@ -6,6 +6,8 @@
 #include <filesystem>
 #include <unordered_set>
 
+
+//show programme parameters
 void show_options(){
     std::cout   << "Options:\n"
                 << "\t-h, --help\t\tshow this\n"
@@ -17,6 +19,7 @@ void show_options(){
 }
 
 
+// shift the alphabet based on the given shift-key
 std::vector <char> create_alphabet(std::vector <char> v, int k){
     std::vector <char> b;
     for (int i=v.size() - k; i <= v.size() - 1; i++){
@@ -29,6 +32,7 @@ std::vector <char> create_alphabet(std::vector <char> v, int k){
 }
 
 
+// based on the real and shifted alphabet, cipher a message
 std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip){
     std::string message;
     for (int i=0; i<input_s.size(); i++){
@@ -50,6 +54,7 @@ std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vect
 }
 
 
+// based on the real and shifted alphabet, decipher a message
 std::string decipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip){
     std::string message;
     for (int i=0; i<input_s.size(); i++){
@@ -70,12 +75,16 @@ std::string decipher(std::string input_s, std::vector <char> alphb_real, std::ve
     return message;
 }
 
+
+// take an input string
 std::string take_input_string(){
     std::string a;
     getline(std::cin, a);
     return a;
 }
 
+
+// ask user for cipher key with input validation for 0 < int < 26
 int take_input_key(){
     int a;
     std::cin>>a;
@@ -106,6 +115,7 @@ return files;
 }
 
 
+// check if a directory is present
 bool check_directories(std::string name){
     std::unordered_set <std::string> directories;
     for(auto& p: std::filesystem::directory_iterator(std::filesystem::current_path())){
@@ -122,6 +132,7 @@ bool check_directories(std::string name){
 }
 
 
+// create a directory
 void create_directories(std::string name){
     std::filesystem::create_directories(name);
     std::cout << name << " directory has been created, you are now ready to go" << std::endl;

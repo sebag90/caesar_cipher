@@ -16,10 +16,12 @@ int main(int argc, char *argv[]){
     if (check_directories("input") == false){
         create_directories("input");
     }
+    // warn user if code is run with no options
     else if (argc < 2){
         std::cout << "Missing argument!" << std::endl;
         show_options();
     }
+    // options
     else if (argc < 3){
         std::unordered_set <std::string> choice {"-c", "--cipher", "-d", "--decipher"};
         std::unordered_set <std::string> cipher_file_choice {"-cf", "-c -f", "--cipher -f"};
@@ -27,11 +29,12 @@ int main(int argc, char *argv[]){
         std::vector <char> a {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
                               'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 
                               's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-
+        // -h, --help
         if (std::string(argv[1]) == "--help" ||
             std::string(argv[1]) == "-h"){
             show_options();
-        }        
+        }   
+        // interactive mode     
         else if (choice.find(argv[1]) != choice.end()){
             
             int key;
@@ -54,17 +57,18 @@ int main(int argc, char *argv[]){
                 }
                 else if (std::string(argv[1]) == "--decipher" ||
                          std::string(argv[1]) == "-d"){
+                             
                     std::string output = decipher(input_string, a, cipher_alphabet);
                     std::cout << output << "\n\n";
                 }
             }
         }
-        //chipher file
+        //chipher and decipher files from input directory
         else if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end() ||
                  decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
+            
             std::vector <std::string> my_files;
             my_files = retrieve_files();
-            
             if (my_files.size() == 0){
                 std::cout << "Input folder is empty" << std::endl;
             }
