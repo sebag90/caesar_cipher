@@ -33,8 +33,8 @@ int main(int argc, char *argv[]){
                               's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
         // -h, --help
-        if (std::string(argv[1]) == "--help" ||
-            std::string(argv[1]) == "-h"){
+        if (std::string_view(argv[1]) == "--help" ||
+            std::string_view(argv[1]) == "-h"){
             show_options();
         }  
 
@@ -48,14 +48,14 @@ int main(int argc, char *argv[]){
                 }
                 int key = take_input_key();
                 std::vector <char> cipher_alphabet = create_alphabet(a, key);
-                if (std::string(argv[1]) == "--cipher" ||
-                    std::string(argv[1]) == "-c"){
+                if (std::string_view(argv[1]) == "--cipher" ||
+                    std::string_view(argv[1]) == "-c"){
                 // if (std::string_view(argv[1]) == "cipher") {    **valid from C++17??
                     std::string output = cipher(input_string, a, cipher_alphabet);
                     std::cout << output << "\n\n";
                 }
-                else if (std::string(argv[1]) == "--decipher" ||
-                         std::string(argv[1]) == "-d"){
+                else if (std::string_view(argv[1]) == "--decipher" ||
+                         std::string_view(argv[1]) == "-d"){
                              
                     std::string output = decipher(input_string, a, cipher_alphabet);
                     std::cout << output << "\n\n";
