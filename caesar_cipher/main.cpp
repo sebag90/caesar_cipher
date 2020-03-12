@@ -46,7 +46,6 @@ int main(int argc, char *argv[]){
                 if (input_string == "..."){
                     break;
                 }
-                std::cout << "Please enter cipher key (1 - 26)\n> ";
                 int key = take_input_key();
                 std::vector <char> cipher_alphabet = create_alphabet(a, key);
                 if (std::string(argv[1]) == "--cipher" ||
@@ -77,22 +76,19 @@ int main(int argc, char *argv[]){
                 if (check_directories("output") == false){
                     create_directories("output");
                 }
-                std::cout << "Please enter cipher key (1 - 26)\n> ";
                 int key = take_input_key();
                 std::vector <char> cipher_alphabet = create_alphabet(a, key);
                 
                 for (auto x : my_files){
                     std::string input_string = read_file(x);
-                    std::string output;
+                    std::string ciphred_input;
                     if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end()){
-                        output = cipher(input_string, a, cipher_alphabet);
+                        ciphred_input = cipher(input_string, a, cipher_alphabet);
                     }
                     else if (decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
-                        output = decipher(input_string, a, cipher_alphabet);
+                        ciphred_input = decipher(input_string, a, cipher_alphabet);
                     }
-                    std::ofstream my_output ("./output/" + x);
-                    my_output << output;
-                    my_output.close();
+                    save_file(x, ciphred_input);
                     
                 }
                 std::cout << "All input files have been succesfully processed" << std::endl;

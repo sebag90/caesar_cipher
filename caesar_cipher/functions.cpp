@@ -87,6 +87,7 @@ std::string take_input_string(){
 
 // ask user for cipher key with input validation for 0 < int < 26
 int take_input_key(){
+    std::cout << "Please enter cipher key (1 - 26)\n> ";
     int a;
     std::cin>>a;
     while(1){
@@ -118,6 +119,7 @@ return files;
 }
 
 
+// read file from input directory
 std::string read_file(std::string filename){
     std::ifstream file;
     file.open("./input/" + filename);
@@ -129,9 +131,18 @@ std::string read_file(std::string filename){
         input_string.erase(input_string.length()-1);
     }
     file.close();
-    
+
     return input_string;
 }
+
+
+//save file in output directory
+void save_file(std::string filename, std::string string_to_save){
+    std::ofstream my_output ("./output/" + filename);
+    my_output << string_to_save;
+    my_output.close();
+}
+
 
 // check if a directory is present
 bool check_directories(std::string name){

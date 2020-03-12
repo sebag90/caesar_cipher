@@ -27,4 +27,6 @@ void create_directories(std::string name);
 
 std::string read_file(std::string filename);
 
+void save_file(std::string filename, std::string string_to_save);
+
 #endif 
