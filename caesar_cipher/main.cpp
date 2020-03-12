@@ -16,28 +16,30 @@ int main(int argc, char *argv[]){
     if (check_directories("input") == false){
         create_directories("input");
     }
+
     // warn user if code is run with no options
     else if (argc < 2){
         std::cout << "Missing argument!" << std::endl;
         show_options();
     }
+
     // options
     else if (argc < 3){
-        std::unordered_set <std::string> choice {"-c", "--cipher", "-d", "--decipher"};
+        std::unordered_set <std::string> interactive_choice {"-c", "--cipher", "-d", "--decipher"};
         std::unordered_set <std::string> cipher_file_choice {"-cf", "-c -f", "--cipher -f"};
         std::unordered_set <std::string> decipher_file_choice {"-df", "-d -f", "--decipher -f"};
         std::vector <char> a {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
                               'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 
                               's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
         // -h, --help
         if (std::string(argv[1]) == "--help" ||
             std::string(argv[1]) == "-h"){
             show_options();
-        }   
+        }  
+
         // interactive mode     
-        else if (choice.find(argv[1]) != choice.end()){
-            
-            int key;
+        else if (interactive_choice.find(argv[1]) != interactive_choice.end()){
             while (true){
                 std::cout << "Enter your message or '...' to exit:\n> ";
                 std::string input_string = take_input_string();
@@ -45,9 +47,7 @@ int main(int argc, char *argv[]){
                     break;
                 }
                 std::cout << "Please enter cipher key (1 - 26)\n> ";
-                key = take_input_key();
-                // flush the newline character out of the buffer between cin and getline in next loop
-                std::cin.ignore();
+                int key = take_input_key();
                 std::vector <char> cipher_alphabet = create_alphabet(a, key);
                 if (std::string(argv[1]) == "--cipher" ||
                     std::string(argv[1]) == "-c"){
@@ -63,6 +63,7 @@ int main(int argc, char *argv[]){
                 }
             }
         }
+
         //chipher and decipher files from input directory
         else if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end() ||
                  decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
@@ -81,16 +82,7 @@ int main(int argc, char *argv[]){
                 std::vector <char> cipher_alphabet = create_alphabet(a, key);
                 
                 for (auto x : my_files){
-                    std::ifstream file;
-                    file.open("./input/" + x);
-                    std::string input_string;
-                    std::string input_string2;
-                    while(getline(file, input_string2)){
-                        input_string += input_string2 + "\n";
-                    }
-                    if (!input_string.empty() && input_string[input_string.length()-1] == '\n') {
-                        input_string.erase(input_string.length()-1);
-                    }
+                    std::string input_string = read_file(x);
                     std::string output;
                     if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end()){
                         output = cipher(input_string, a, cipher_alphabet);
@@ -101,11 +93,12 @@ int main(int argc, char *argv[]){
                     std::ofstream my_output ("./output/" + x);
                     my_output << output;
                     my_output.close();
-                    file.close();
+                    
                 }
                 std::cout << "All input files have been succesfully processed" << std::endl;
             }
         }
+
         // TODO:implement decipher by bruteforce + frequency analysis
         // else if (){
 

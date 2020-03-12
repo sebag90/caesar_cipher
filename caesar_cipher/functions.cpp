@@ -5,6 +5,7 @@
 #include <dirent.h>
 #include <filesystem>
 #include <unordered_set>
+#include <fstream>
 
 
 //show programme parameters
@@ -100,6 +101,8 @@ int take_input_key(){
         }
     }
     std::cout << "Entered key: " << a << std::endl;
+    // flush the newline character out of the buffer between cin and getline in next loop
+    std::cin.ignore();
     return a;
 }
 
@@ -114,6 +117,21 @@ std::vector<std::string> retrieve_files(){
 return files;
 }
 
+
+std::string read_file(std::string filename){
+    std::ifstream file;
+    file.open("./input/" + filename);
+    std::string input_string, temp_input_string;
+    while(getline(file, temp_input_string)){
+        input_string += temp_input_string + "\n";
+    }
+    if (!input_string.empty() && input_string[input_string.length()-1] == '\n') {
+        input_string.erase(input_string.length()-1);
+    }
+    file.close();
+    
+    return input_string;
+}
 
 // check if a directory is present
 bool check_directories(std::string name){

@@ -25,4 +25,6 @@ bool check_directories(std::string name);
 
 void create_directories(std::string name);
 
+std::string read_file(std::string filename);
+
 #endif 
