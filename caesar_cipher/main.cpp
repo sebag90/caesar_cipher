@@ -50,7 +50,7 @@ int main(int argc, char *argv[]){
                 std::vector <char> cipher_alphabet = create_alphabet(a, key);
                 if (std::string_view(argv[1]) == "--cipher" ||
                     std::string_view(argv[1]) == "-c"){
-                // if (std::string_view(argv[1]) == "cipher") {    **valid from C++17??
+                        
                     std::string output = cipher(input_string, a, cipher_alphabet);
                     std::cout << output << "\n\n";
                 }
