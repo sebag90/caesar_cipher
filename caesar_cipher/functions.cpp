@@ -90,7 +90,7 @@ int take_input_key(){
     std::cout << "Please enter cipher key (1 - 26)\n> ";
     int a;
     std::cin>>a;
-    while(1){
+    while(true){
         if (std::cin.fail() || a < 0 || a > 26){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits <std::streamsize> ::max(),'\n');
