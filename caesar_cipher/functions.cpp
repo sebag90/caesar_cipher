@@ -94,7 +94,7 @@ int take_input_key(){
         if (std::cin.fail() || a < 0 || a > 26){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits <std::streamsize> ::max(),'\n');
-            std::cout << "You have entered wrong input\n> ";
+            std::cout << "Invalid key\n> ";
             std::cin>>a;
         }
         if(!std::cin.fail() && a > 0 && a < 26){
