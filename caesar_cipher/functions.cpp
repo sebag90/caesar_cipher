@@ -107,6 +107,7 @@ int take_input_key(){
     return a;
 }
 
+
 // create a vector with filenames
 std::vector<std::string> retrieve_files(){
     std::vector<std::string> files;   

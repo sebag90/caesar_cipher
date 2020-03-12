@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
             }
         }
 
-        //chipher and decipher files from input directory
+        // chipher and decipher files from input directory
         else if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end() ||
                  decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
             
