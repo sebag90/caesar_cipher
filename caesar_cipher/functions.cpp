@@ -12,9 +12,9 @@
 void show_options(){
     std::cout   << "Options:\n"
                 << "\t-h, --help\t\tshow this\n"
-                << "\t-c, --cipher\t\tencode a message\n"
+                << "\t-c, --cipher\t\tencode a message in interactive mode\n"
                 << "\t-c, --cipher -f\t\tencode files in input folder\n"
-                << "\t-d, --decipher\t\tdecode a message\n"
+                << "\t-d, --decipher\t\tdecode a message in interactive mode\n"
                 << "\t-d, --decipher -f\tdecode files in input folder\n"
                 << std::endl;
 }
