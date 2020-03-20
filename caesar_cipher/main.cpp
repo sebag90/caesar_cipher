@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
+#include <algorithm>
 
 
 #include "functions.hpp"
@@ -29,7 +30,7 @@ int main(int argc, char *argv[]){
         std::unordered_set <std::string> interactive_choice {"-c", "--cipher", "-d", "--decipher"};
         std::unordered_set <std::string> cipher_file_choice {"-cf", "-c -f", "--cipher -f"};
         std::unordered_set <std::string> decipher_file_choice {"-df", "-d -f", "--decipher -f"};
-        std::unordered_set <std::string> bruteforce_choice {"-bf", "-b -f", "--bruteforce"};
+        std::unordered_set <std::string> bruteforce_choice {"-bf", "--bruteforce"};
         std::vector <char> a {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
                               'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 
                               's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
@@ -110,30 +111,33 @@ int main(int argc, char *argv[]){
                     create_directories("output");
                 }
                 for (auto x : my_files){
-
                     std::string input_string = read_file(x);
-                    std::string ciphred_input;
-                    std::string ciao = calculate_letter_frequecy(input_string, a);
-                    std::cout << ciao << std::endl;
-
-                    int a = levenshtein("ciao", "biao");
-                    std::cout << a << std::endl;
-
+                    std::string eng_letter_frequency = "etaoinsrhldcumfpgwybvkxjqz";
+                    std::vector <std::pair <int, int>> results;
                     
+                    for (int i = 0; i < 26; i++){
+                        std::vector <char> ciphred_alphabet = create_alphabet(a, i);
+                        std::string deciphred_output = decipher(input_string, a, ciphred_alphabet);
+                        std::string frequency_input = calculate_letter_frequecy(deciphred_output, a);
+                        int distance = levenshtein(eng_letter_frequency, frequency_input);
+                        results.push_back(std::make_pair(distance, i));
+                    }
 
-                    // save_file(x, ciphred_input);
-                    
+                    std::sort(results.begin(), results.end());
+                    std::vector <char> ciphred_alphabet = create_alphabet(a, results[0].second);
+                    std::string real_result = decipher(input_string, a, ciphred_alphabet);
+                    save_file(x, real_result);
                 }
                 std::cout << "All input files have been succesfully processed" << std::endl;
             }
         }
-
        
         else{
         std::cout << "Function not supported" << std::endl;
         show_options();
         }
     }
+
     else{
         std::cout << "Function not supported" << std::endl;
         show_options();

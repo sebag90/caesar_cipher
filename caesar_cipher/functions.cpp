@@ -10,14 +10,16 @@
 #include <fstream>
 
 
-//show programme parameters
+// show programme parameters
+// TODO: better and complete help support
 void show_options(){
     std::cout   << "Options:\n"
                 << "\t-h, --help\t\tshow this\n"
                 << "\t-c, --cipher\t\tencode a message in interactive mode\n"
                 << "\t-c, --cipher -f\t\tencode files in input folder\n"
                 << "\t-d, --decipher\t\tdecode a message in interactive mode\n"
-                << "\t-d, --decipher -f\tdecode files in input folder\n"
+                << "\t-df, --decipher -f\tdecode files in input folder\n"
+                << "\t-bf, --bruteforce\tcrack a ciphred file in input folder"
                 << std::endl;
 }
 
@@ -218,7 +220,7 @@ std::string calculate_letter_frequecy(std::string input_string, std::vector <cha
 }
 
 
-// calculate levenshtein difference
+// calculate levenshtein distance
 int levenshtein (std::string string1, std::string string2){
     const int x = string1.length () + 1;
     const int y = string2.length() + 1;
