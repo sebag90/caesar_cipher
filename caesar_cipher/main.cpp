@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <unordered_set>
+#include <unordered_map>
 
 
 #include "functions.hpp"
@@ -28,6 +29,7 @@ int main(int argc, char *argv[]){
         std::unordered_set <std::string> interactive_choice {"-c", "--cipher", "-d", "--decipher"};
         std::unordered_set <std::string> cipher_file_choice {"-cf", "-c -f", "--cipher -f"};
         std::unordered_set <std::string> decipher_file_choice {"-df", "-d -f", "--decipher -f"};
+        std::unordered_set <std::string> bruteforce_choice {"-bf", "-b -f", "--bruteforce"};
         std::vector <char> a {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
                               'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 
                               's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
@@ -96,11 +98,37 @@ int main(int argc, char *argv[]){
         }
 
         // TODO:implement decipher by bruteforce + frequency analysis
-        // else if (){
+        else if (bruteforce_choice.find(argv[1]) != bruteforce_choice.end()){
 
-        // }
+            std::vector <std::string> my_files;
+            my_files = retrieve_files();
+            if (my_files.size() == 0){
+                std::cout << "Input folder is empty" << std::endl;
+            }
+            else{
+                if (check_directories("output") == false){
+                    create_directories("output");
+                }
+                for (auto x : my_files){
 
+                    std::string input_string = read_file(x);
+                    std::string ciphred_input;
+                    std::string ciao = calculate_letter_frequecy(input_string, a);
+                    std::cout << ciao << std::endl;
 
+                    int a = levenshtein("ciao", "biao");
+                    std::cout << a << std::endl;
+
+                    
+
+                    // save_file(x, ciphred_input);
+                    
+                }
+                std::cout << "All input files have been succesfully processed" << std::endl;
+            }
+        }
+
+       
         else{
         std::cout << "Function not supported" << std::endl;
         show_options();

@@ -29,4 +29,8 @@ std::string read_file(std::string filename);
 
 void save_file(std::string filename, std::string string_to_save);
 
+std::string calculate_letter_frequecy(std::string input_string, std::vector <char> alphabet);
+
+int levenshtein (std::string string1, std::string string2);
+
 #endif 
