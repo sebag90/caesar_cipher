@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
         std::unordered_set <std::string> cipher_file_choice {"-cf", "-c -f", "--cipher -f"};
         std::unordered_set <std::string> decipher_file_choice {"-df", "-d -f", "--decipher -f"};
         std::unordered_set <std::string> bruteforce_choice {"-bf", "--bruteforce"};
-        std::vector <char> a {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
+        std::vector <char> actual_alphabet {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
                               'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 
                               's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
@@ -41,26 +41,30 @@ int main(int argc, char *argv[]){
             show_options();
         }  
 
-        // interactive mode     
+        // interactive mode (loop)  
         else if (interactive_choice.find(argv[1]) != interactive_choice.end()){
             while (true){
+                // take input string and key (with input validation)
                 std::cout << "Enter your message or '...' to exit:\n> ";
                 std::string input_string = take_input_string();
                 if (input_string == "..."){
                     break;
                 }
                 int key = take_input_key();
-                std::vector <char> cipher_alphabet = create_alphabet(a, key);
+                std::vector <char> cipher_alphabet = create_alphabet(actual_alphabet, key);
+
+                // cipher or decipher based on user's choice
                 if (std::string_view(argv[1]) == "--cipher" ||
                     std::string_view(argv[1]) == "-c"){
                         
-                    std::string output = cipher(input_string, a, cipher_alphabet);
+                    std::string output = cipher(input_string, actual_alphabet, cipher_alphabet);
                     std::cout << output << "\n\n";
                 }
+
                 else if (std::string_view(argv[1]) == "--decipher" ||
                          std::string_view(argv[1]) == "-d"){
                              
-                    std::string output = decipher(input_string, a, cipher_alphabet);
+                    std::string output = decipher(input_string, actual_alphabet, cipher_alphabet);
                     std::cout << output << "\n\n";
                 }
             }
@@ -76,20 +80,22 @@ int main(int argc, char *argv[]){
                 std::cout << "Input folder is empty" << std::endl;
             }
             else{
+                // check if directories exist and take key to gorm a cipher alphabet
                 if (check_directories("output") == false){
                     create_directories("output");
                 }
                 int key = take_input_key();
-                std::vector <char> cipher_alphabet = create_alphabet(a, key);
+                std::vector <char> cipher_alphabet = create_alphabet(actual_alphabet, key);
                 
+                // cipher or decipher every file in the input order using the selected key
                 for (auto x : my_files){
                     std::string input_string = read_file(x);
                     std::string ciphred_input;
                     if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end()){
-                        ciphred_input = cipher(input_string, a, cipher_alphabet);
+                        ciphred_input = cipher(input_string, actual_alphabet, cipher_alphabet);
                     }
                     else if (decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
-                        ciphred_input = decipher(input_string, a, cipher_alphabet);
+                        ciphred_input = decipher(input_string, actual_alphabet, cipher_alphabet);
                     }
                     save_file(x, ciphred_input);
                     
@@ -98,7 +104,7 @@ int main(int argc, char *argv[]){
             }
         }
 
-        // TODO:implement decipher by bruteforce + frequency analysis
+        // decipher by bruteforce + frequency analysis
         else if (bruteforce_choice.find(argv[1]) != bruteforce_choice.end()){
 
             std::vector <std::string> my_files;
@@ -110,24 +116,28 @@ int main(int argc, char *argv[]){
                 if (check_directories("output") == false){
                     create_directories("output");
                 }
+
                 for (auto x : my_files){
                     std::string input_string = read_file(x);
                     std::string eng_letter_frequency = "etaoinsrhldcumfpgwybvkxjqz";
                     std::vector <std::pair <int, int>> results;
                     
+                    // try every key and save pairs of <frequency, key> in a vector
                     for (int i = 0; i < 26; i++){
-                        std::vector <char> ciphred_alphabet = create_alphabet(a, i);
-                        std::string deciphred_output = decipher(input_string, a, ciphred_alphabet);
-                        std::string frequency_input = calculate_letter_frequecy(deciphred_output, a);
+                        std::vector <char> ciphred_alphabet = create_alphabet(actual_alphabet, i);
+                        std::string deciphred_output = decipher(input_string, actual_alphabet, ciphred_alphabet);
+                        std::string frequency_input = calculate_letter_frequecy(deciphred_output, actual_alphabet);
                         int distance = levenshtein(eng_letter_frequency, frequency_input);
                         results.push_back(std::make_pair(distance, i));
                     }
 
+                    // sort vector, the first result (smallest levenshtein distance) is the right key to decipher
                     std::sort(results.begin(), results.end());
-                    std::vector <char> ciphred_alphabet = create_alphabet(a, results[0].second);
-                    std::string real_result = decipher(input_string, a, ciphred_alphabet);
+                    std::vector <char> ciphred_alphabet = create_alphabet(actual_alphabet, results[0].second);
+                    std::string real_result = decipher(input_string, actual_alphabet, ciphred_alphabet);
                     save_file(x, real_result);
                 }
+                
                 std::cout << "All input files have been succesfully processed" << std::endl;
             }
         }

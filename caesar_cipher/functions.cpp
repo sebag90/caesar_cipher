@@ -19,7 +19,7 @@ void show_options(){
                 << "\t-c, --cipher -f\t\tencode files in input folder\n"
                 << "\t-d, --decipher\t\tdecode a message in interactive mode\n"
                 << "\t-df, --decipher -f\tdecode files in input folder\n"
-                << "\t-bf, --bruteforce\tcrack a ciphred file in input folder"
+                << "\t-bf, --bruteforce\tcrack ciphred files in input folder"
                 << std::endl;
 }
 
@@ -224,16 +224,26 @@ std::string calculate_letter_frequecy(std::string input_string, std::vector <cha
 int levenshtein (std::string string1, std::string string2){
     const int x = string1.length () + 1;
     const int y = string2.length() + 1;
-    int matrix[x][y] = {0};
+    
+    // working only linux
+    // int matrix[x][y] = {0}; 
 
+    int matrix[x][y];
+
+    for (int i = 0; i < x; i++){
+        for (int j = 0; j < y; j++){
+            matrix[i][j] = 0;
+        }
+    }
+
+    // borders of matrix
     for (int i = 0; i < x ; i++){
         matrix[i][0] = i;
     }
-
     for (int j = 0; j < y; j++){
         matrix[0][j] = j;
     }
-
+    // levenshtein matrix
     for (int i = 1; i < x; i++){
         for (int j = 1; j < y; j++){
             int cost;
