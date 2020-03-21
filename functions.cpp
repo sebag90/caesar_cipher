@@ -11,16 +11,15 @@
 
 
 // show programme parameters
-// TODO: better and complete help support
 void show_options(){
     std::cout   << "Options:\n"
-                << "\t-h, --help\t\tshow this\n"
+                << "\t-h, --help\t\tshow this message and exit\n"
                 << "\t-c, --cipher\t\tencode a message in interactive mode\n"
-                << "\t-c, --cipher -f\t\tencode files in input folder\n"
                 << "\t-d, --decipher\t\tdecode a message in interactive mode\n"
+                << "\t-cf, --cipher -f\tencode files in input folder\n"
                 << "\t-df, --decipher -f\tdecode files in input folder\n"
                 << "\t-bf, --bruteforce\tcrack ciphred files in input folder"
-                << std::endl;
+                << std::endl << std::endl;
 }
 
 
