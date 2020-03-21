@@ -47,9 +47,11 @@ int main(int argc, char *argv[]){
                 // take input string and key (with input validation)
                 std::cout << "Enter your message or '...' to exit:\n> ";
                 std::string input_string = take_input_string();
+
                 if (input_string == "..."){
                     break;
                 }
+
                 int key = take_input_key();
                 std::vector <char> cipher_alphabet = create_alphabet(actual_alphabet, key);
 
@@ -76,14 +78,17 @@ int main(int argc, char *argv[]){
             
             std::vector <std::string> my_files;
             my_files = retrieve_files();
+
             if (my_files.size() == 0){
                 std::cout << "Input folder is empty" << std::endl;
             }
+
             else{
                 // check if directories exist and take key to gorm a cipher alphabet
                 if (check_directories("output") == false){
                     create_directories("output");
                 }
+
                 int key = take_input_key();
                 std::vector <char> cipher_alphabet = create_alphabet(actual_alphabet, key);
                 
@@ -91,12 +96,15 @@ int main(int argc, char *argv[]){
                 for (auto x : my_files){
                     std::string input_string = read_file(x);
                     std::string ciphred_input;
+
                     if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end()){
                         ciphred_input = cipher(input_string, actual_alphabet, cipher_alphabet);
                     }
+
                     else if (decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
                         ciphred_input = decipher(input_string, actual_alphabet, cipher_alphabet);
                     }
+
                     save_file(x, ciphred_input);
                     
                 }
@@ -109,10 +117,13 @@ int main(int argc, char *argv[]){
 
             std::vector <std::string> my_files;
             my_files = retrieve_files();
+
             if (my_files.size() == 0){
                 std::cout << "Input folder is empty" << std::endl;
             }
+
             else{
+
                 if (check_directories("output") == false){
                     create_directories("output");
                 }
@@ -137,14 +148,14 @@ int main(int argc, char *argv[]){
                     std::string real_result = decipher(input_string, actual_alphabet, ciphred_alphabet);
                     save_file(x, real_result);
                 }
-                
+
                 std::cout << "All input files have been succesfully processed" << std::endl;
             }
         }
        
         else{
-        std::cout << "Function not supported" << std::endl;
-        show_options();
+            std::cout << "Function not supported" << std::endl;
+            show_options();
         }
     }
 
