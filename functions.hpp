@@ -9,15 +9,15 @@
 
 void show_options();
 
-std::vector <char> create_alphabet(std::vector <char> v, int k);
+std::string create_alphabet(std::string v, int k);
 
-std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip);
+std::string cipher(std::string input_s, std::string alphb_real, std::string alphb_cip);
 
-std::string decipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip);
+std::string decipher(std::string input_s, std::string alphb_real, std::string alphb_cip);
 
 std::string take_input_string();
 
-int take_input_key();
+int take_input_key(int limit);
 
 std::vector<std::string> retrieve_files();
 
@@ -29,7 +29,7 @@ std::string read_file(std::string filename);
 
 void save_file(std::string filename, std::string string_to_save);
 
-std::string calculate_letter_frequecy(std::string input_string, std::vector <char> alphabet);
+std::string calculate_letter_frequecy(std::string input_string, std::string alphabet);
 
 int levenshtein (std::string string1, std::string string2);
 

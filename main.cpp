@@ -31,9 +31,8 @@ int main(int argc, char *argv[]){
         std::unordered_set <std::string> cipher_file_choice {"-cf", "-c -f", "--cipher -f"};
         std::unordered_set <std::string> decipher_file_choice {"-df", "-d -f", "--decipher -f"};
         std::unordered_set <std::string> bruteforce_choice {"-bf", "--bruteforce"};
-        std::vector <char> actual_alphabet {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
-                              'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 
-                              's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+        std::string actual_alphabet = "abcdefghijklmnopqrstuvwxyzäöüß";
+        int key_limit = actual_alphabet.size();
 
         // -h, --help
         if (std::string_view(argv[1]) == "--help" ||
@@ -52,8 +51,8 @@ int main(int argc, char *argv[]){
                     break;
                 }
 
-                int key = take_input_key();
-                std::vector <char> cipher_alphabet = create_alphabet(actual_alphabet, key);
+                int key = take_input_key(key_limit);
+                std::string cipher_alphabet = create_alphabet(actual_alphabet, key);
 
                 // cipher or decipher based on user's choice
                 if (std::string_view(argv[1]) == "--cipher" ||
@@ -89,8 +88,8 @@ int main(int argc, char *argv[]){
                     create_directories("output");
                 }
 
-                int key = take_input_key();
-                std::vector <char> cipher_alphabet = create_alphabet(actual_alphabet, key);
+                int key = take_input_key(key_limit);
+                std::string cipher_alphabet = create_alphabet(actual_alphabet, key);
                 
                 // cipher or decipher every file in the input order using the selected key
                 for (auto x : my_files){
@@ -135,7 +134,7 @@ int main(int argc, char *argv[]){
                     
                     // try every key and save pairs of <frequency, key> in a vector
                     for (int i = 0; i < 26; i++){
-                        std::vector <char> ciphred_alphabet = create_alphabet(actual_alphabet, i);
+                        std::string ciphred_alphabet = create_alphabet(actual_alphabet, i);
                         std::string deciphred_output = decipher(input_string, actual_alphabet, ciphred_alphabet);
                         std::string frequency_input = calculate_letter_frequecy(deciphred_output, actual_alphabet);
                         int distance = levenshtein(eng_letter_frequency, frequency_input);
@@ -144,7 +143,7 @@ int main(int argc, char *argv[]){
 
                     // sort vector, the first result (smallest levenshtein distance) is the right key to decipher
                     std::sort(results.begin(), results.end());
-                    std::vector <char> ciphred_alphabet = create_alphabet(actual_alphabet, results[0].second);
+                    std::string ciphred_alphabet = create_alphabet(actual_alphabet, results[0].second);
                     std::string real_result = decipher(input_string, actual_alphabet, ciphred_alphabet);
                     save_file(x, real_result);
                 }

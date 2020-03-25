@@ -24,8 +24,8 @@ void show_options(){
 
 
 // shift the alphabet based on the given shift-key
-std::vector <char> create_alphabet(std::vector <char> v, int k){
-    std::vector <char> b;
+std::string create_alphabet(std::string v, int k){
+    std::string b;
 
     for (int i=v.size() - k; i <= v.size() - 1; i++){
         b.push_back(v[i]);
@@ -40,7 +40,7 @@ std::vector <char> create_alphabet(std::vector <char> v, int k){
 
 
 // based on the real and shifted alphabet, cipher a message
-std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip){
+std::string cipher(std::string input_s, std::string alphb_real, std::string alphb_cip){
     std::string message;
 
     for (int i=0; i<input_s.size(); i++){
@@ -64,7 +64,7 @@ std::string cipher(std::string input_s, std::vector <char> alphb_real, std::vect
 
 
 // based on the real and shifted alphabet, decipher a message
-std::string decipher(std::string input_s, std::vector <char> alphb_real, std::vector <char> alphb_cip){
+std::string decipher(std::string input_s, std::string alphb_real, std::string alphb_cip){
     std::string message;
 
     for (int i=0; i<input_s.size(); i++){
@@ -96,20 +96,20 @@ std::string take_input_string(){
 
 
 // ask user for cipher key with input validation for 0 < int < 26
-int take_input_key(){
-    std::cout << "Please enter cipher key (1 - 26)\n> ";
+int take_input_key(int limit){
+    std::cout << "Please enter cipher key (1 - " << limit << ")\n> ";
     int a;
     std::cin>>a;
 
     while(true){
-        if (std::cin.fail() || a < 0 || a > 26){
+        if (std::cin.fail() || a < 0 || a > limit){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits <std::streamsize> ::max(),'\n');
             std::cout << "Invalid key\n> ";
             std::cin>>a;
         }
 
-        if(!std::cin.fail() && a > 0 && a < 26){
+        if(!std::cin.fail() && a > 0 && a < limit){
             break;
         }
     }
@@ -189,7 +189,7 @@ void create_directories(std::string name){
 
 
 // calculate letter frequency
-std::string calculate_letter_frequecy(std::string input_string, std::vector <char> alphabet){
+std::string calculate_letter_frequecy(std::string input_string, std::string alphabet){
     std::map <char, double> letter_frequency;
     std::string ordered_letters;
     int total = 0;
