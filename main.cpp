@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
         std::unordered_set <std::string> cipher_file_choice {"-cf", "-c -f", "--cipher -f"};
         std::unordered_set <std::string> decipher_file_choice {"-df", "-d -f", "--decipher -f"};
         std::unordered_set <std::string> bruteforce_choice {"-bf", "--bruteforce"};
-        std::string actual_alphabet = "abcdefghijklmnopqrstuvwxyzäöüß";
+        std::string actual_alphabet = "abcdefghijklmnopqrstuvwxyz";
         int key_limit = actual_alphabet.size();
 
         // -h, --help
