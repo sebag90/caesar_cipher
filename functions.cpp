@@ -109,7 +109,7 @@ int take_input_key(int limit){
             std::cin>>a;
         }
 
-        if(!std::cin.fail() && a > 1 && a < limit){
+        if(!std::cin.fail() && a > 0 && a < limit){
             break;
         }
     }
