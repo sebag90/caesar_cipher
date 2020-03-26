@@ -102,14 +102,14 @@ int take_input_key(int limit){
     std::cin>>a;
 
     while(true){
-        if (std::cin.fail() || a < 0 || a > limit){
+        if (std::cin.fail() || a < 1 || a > limit){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits <std::streamsize> ::max(),'\n');
             std::cout << "Invalid key\n> ";
             std::cin>>a;
         }
 
-        if(!std::cin.fail() && a > 0 && a < limit){
+        if(!std::cin.fail() && a > 1 && a < limit){
             break;
         }
     }
