@@ -1,6 +1,10 @@
+Output_filename = main
+Compiler = g++
+Library = std=c++17
+
 all:clean
-	g++ -std=c++17 main.cpp functions.cpp -o main
-	# clang++ -std=c++17 main.cpp functions.cpp -o main
+	$(Compiler) -$(Library) main.cpp functions.cpp -o $(Output_filename)
+	
 
 clean:
-	rm -f main
+	rm -f $(Output_filename)
