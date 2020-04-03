@@ -97,12 +97,12 @@ std::string take_input_string(){
 
 // ask user for cipher key with input validation for 0 < int < 26
 int take_input_key(int limit){
-    std::cout << "Please enter cipher key (1 - " << limit << ")\n> ";
+    std::cout << "Please enter cipher key (1 - " << limit - 1 << ")\n> ";
     int a;
     std::cin>>a;
 
     while(true){
-        if (std::cin.fail() || a < 1 || a > limit){
+        if (std::cin.fail() || a < 1 || a >= limit){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits <std::streamsize> ::max(),'\n');
             std::cout << "Invalid key\n> ";
