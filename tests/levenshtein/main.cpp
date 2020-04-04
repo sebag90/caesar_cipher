@@ -1,14 +1,16 @@
-#include <iostream>
+#define BOOST_TEST_MODULE boost_test_macro_overview
+#include <boost/test/included/unit_test.hpp>
 #include <string>
 #include "../../functions.hpp"
 
+namespace tt = boost::test_tools;
 
+BOOST_AUTO_TEST_CASE( test_no_1){
 
-int main(){
-    std::string s1, s2;
+    BOOST_TEST(levenshtein("text", "test") == 1); 
+}
 
-    s1 = "test";
-    s2 = "text";
-
-    std::cout << levenshtein(s1, s2) << std::endl;
+BOOST_AUTO_TEST_CASE( test_no_2){
+    
+    BOOST_TEST(levenshtein("back", "book") == 2);
 }
