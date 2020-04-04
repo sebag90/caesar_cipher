@@ -1,13 +1,14 @@
-#include <iostream>
+#define BOOST_TEST_MODULE boost_test_macro_overview
+#include <boost/test/included/unit_test.hpp>
 #include <string>
 #include "../../functions.hpp"
 
 
+namespace tt = boost::test_tools;
 
-int main(){
-    
+BOOST_AUTO_TEST_CASE( test_no_1){
+
     std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
-    std::string s1 = "tttteest";
 
-    std::cout << calculate_letter_frequecy(s1, alphabet) << std::endl;
+    BOOST_TEST(calculate_letter_frequecy("tttteest", alphabet) == "tes"); 
 }
