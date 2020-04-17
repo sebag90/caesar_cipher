@@ -76,7 +76,7 @@ int main(int argc, char *argv[]){
                  decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
             
             std::vector <std::string> my_files;
-            my_files = retrieve_files();
+            my_files = retrieve_files("input");
 
             if (my_files.size() == 0){
                 std::cout << "Input folder is empty" << std::endl;
@@ -93,7 +93,7 @@ int main(int argc, char *argv[]){
                 
                 // cipher or decipher every file in the input order using the selected key
                 for (auto x : my_files){
-                    std::string input_string = read_file(x);
+                    std::string input_string = read_file(x, "./input/");
                     std::string ciphred_input;
 
                     if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end()){
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
                         ciphred_input = decipher(input_string, actual_alphabet, cipher_alphabet);
                     }
 
-                    save_file(x, ciphred_input);
+                    save_file(x, ciphred_input, "./output/");
                     
                 }
                 std::cout << "All input files have been succesfully processed" << std::endl;
@@ -115,7 +115,7 @@ int main(int argc, char *argv[]){
         else if (bruteforce_choice.find(argv[1]) != bruteforce_choice.end()){
 
             std::vector <std::string> my_files;
-            my_files = retrieve_files();
+            my_files = retrieve_files("input");
 
             if (my_files.size() == 0){
                 std::cout << "Input folder is empty" << std::endl;
@@ -128,7 +128,7 @@ int main(int argc, char *argv[]){
                 }
 
                 for (auto x : my_files){
-                    std::string input_string = read_file(x);
+                    std::string input_string = read_file(x, "./input/");
                     std::string eng_letter_frequency = "etaoinsrhldcumfpgwybvkxjqz";
                     std::vector <std::pair <int, int>> results;
                     
@@ -145,7 +145,7 @@ int main(int argc, char *argv[]){
                     std::sort(results.begin(), results.end());
                     std::string ciphred_alphabet = create_alphabet(actual_alphabet, results[0].second);
                     std::string real_result = decipher(input_string, actual_alphabet, ciphred_alphabet);
-                    save_file(x, real_result);
+                    save_file(x, real_result, "./output/");
                 }
 
                 std::cout << "All input files have been succesfully processed" << std::endl;

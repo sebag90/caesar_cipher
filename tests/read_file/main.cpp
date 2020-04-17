@@ -15,10 +15,10 @@ BOOST_AUTO_TEST_CASE( test_macro_overview )
     
     std::vector <std::string> results;
     std::vector <std::string> file_names;
-    file_names = retrieve_files();
+    file_names = retrieve_files("input");
 
     for (auto x : file_names){
-        std::string message = read_file(x);
+        std::string message = read_file(x, "./output/");
         results.push_back(message);           
     }
 

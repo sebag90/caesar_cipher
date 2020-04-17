@@ -1,21 +1,41 @@
-#include <iostream>
+#define BOOST_TEST_MODULE boost_test_macro_overview
+#include <boost/test/included/unit_test.hpp>
+
 #include <vector>
+#include <algorithm>    
 #include <string>
 #include "../../functions.hpp"
 
 
+BOOST_AUTO_TEST_CASE( test_macro_overview )
+{
+    std::vector <std::string> expected {"this is a test",
+                                        "this is another test", 
+                                        "khaleesi is marrying jack sparrow"};
 
-int main(){
-   
-    std::string test1, test2, test3;
-
-    test1 = "this is a test";
-    test2 = "this is another test";
-    test3 = "khaleesi is marrying jack sparrow";
-
-    std::vector <std::string> file_names {test1, test2, test3};
-    
-    for (int i = 0; i < file_names.size(); i++){
-        save_file("test" + std::to_string(i + 1), file_names[i]);
+    // write files
+    for (int i = 0; i < expected.size(); i++){
+        save_file("test" + std::to_string(i + 1), expected[i], "./output/");
     }
+    
+
+    // read_file test
+
+
+    std::vector <std::string> results;
+    std::vector <std::string> file_names;
+    file_names = retrieve_files("output");
+
+    for (auto x : file_names){
+        std::string message = read_file(x, "./output/");
+        results.push_back(message);           
+    }
+
+    std::sort (expected.begin(), expected.end());
+    std::sort (results.begin(), results.end());
+
+
+    BOOST_CHECK_EQUAL_COLLECTIONS(results.begin(), results.end(), 
+                              expected.begin(), expected.end());
+  
 }

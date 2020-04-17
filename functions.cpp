@@ -122,10 +122,10 @@ int take_input_key(int limit){
 
 
 // create a vector with filenames
-std::vector<std::string> retrieve_files(){
+std::vector<std::string> retrieve_files(std::string directory){
     std::vector<std::string> files;   
 
-    for(auto& p: std::filesystem::directory_iterator("input")){
+    for(auto& p: std::filesystem::directory_iterator(directory)){
         files.push_back(p.path().filename());
     }
    
@@ -134,9 +134,9 @@ return files;
 
 
 // read file from input directory
-std::string read_file(std::string filename){
+std::string read_file(std::string filename, std::string directory){
     std::ifstream file;
-    file.open("./input/" + filename);
+    file.open(directory + filename);
     std::string input_string, temp_input_string;
 
     while(getline(file, temp_input_string)){
@@ -154,8 +154,8 @@ std::string read_file(std::string filename){
 
 
 //save file in output directory
-void save_file(std::string filename, std::string string_to_save){
-    std::ofstream my_output ("./output/" + filename);
+void save_file(std::string filename, std::string string_to_save, std::string directory){
+    std::ofstream my_output (directory + filename);
     my_output << string_to_save;
     my_output.close();
 }

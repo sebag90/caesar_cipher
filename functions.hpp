@@ -19,15 +19,15 @@ std::string take_input_string();
 
 int take_input_key(int limit);
 
-std::vector<std::string> retrieve_files();
+std::vector<std::string> retrieve_files(std::string directory);
 
 bool check_directories(std::string name);
 
 void create_directories(std::string name);
 
-std::string read_file(std::string filename);
+std::string read_file(std::string filename, std::string directory);
 
-void save_file(std::string filename, std::string string_to_save);
+void save_file(std::string filename, std::string string_to_save, std::string directory);
 
 std::string calculate_letter_frequecy(std::string input_string, std::string alphabet);
 
