@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_HPP
-#define FUNCTIONS_HPP
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
 
 
 #include <vector>
