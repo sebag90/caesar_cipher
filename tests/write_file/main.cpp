@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>    
 #include <string>
-#include "../../functions.hpp"
+#include "../../functions.h"
 
 
 BOOST_AUTO_TEST_CASE( test_macro_overview )
