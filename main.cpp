@@ -139,6 +139,7 @@ int main(int argc, char *argv[]){
                         std::string frequency_input = calculate_letter_frequecy(deciphred_output, actual_alphabet);
                         int distance = levenshtein(eng_letter_frequency, frequency_input);
                         results.push_back(std::make_pair(distance, i));
+                        std::cout << "finished language analysis " << i+1 << " of " << 26 << std::endl;
                     }
 
                     // sort vector, the first result (smallest levenshtein distance) is the right key to decipher
