@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <unordered_set>
 #include <map>
+#include <unordered_map>
 #include <algorithm>
 #include <fstream>
 
@@ -24,7 +25,8 @@ void show_options(){
 
 
 // shift the alphabet based on the given shift-key
-std::string create_alphabet(std::string v, int k){
+std::unordered_map <char, char> create_cipher_alphabet(std::string v, int k){
+    std::unordered_map <char, char> a;
     std::string b;
 
     for (int i=v.size() - k; i <= v.size() - 1; i++){
@@ -35,12 +37,35 @@ std::string create_alphabet(std::string v, int k){
         b.push_back(v[j]);
     }
 
-    return b;
+    for (int k = 0; k < b.size(); k++){
+        a[b[k]] = v[k];
+    }
+
+    return a;
+}
+
+std::unordered_map <char, char> create_decipher_alphabet(std::string v, int k){
+    std::unordered_map <char, char> a;
+    std::string b;
+
+    for (int i=v.size() - k; i <= v.size() - 1; i++){
+        b.push_back(v[i]);
+    }
+
+    for (int j = 0; j < v.size() - k; j++){
+        b.push_back(v[j]);
+    }
+
+    for (int k = 0; k < b.size(); k++){
+        a[v[k]] = b[k];
+    }
+
+    return a;
 }
 
 
 // based on the real and shifted alphabet, cipher a message
-std::string cipher(std::string input_s, std::string alphb_real, std::string alphb_cip){
+std::string cipher(std::string input_s, std::unordered_map <char, char> alphb_cip){
     std::string message;
 
     for (int i=0; i<input_s.size(); i++){
@@ -48,15 +73,14 @@ std::string cipher(std::string input_s, std::string alphb_real, std::string alph
             message.push_back(input_s[i]);
         }
 
-        for (int j=0; j<alphb_real.size(); j++){
-            if (tolower(input_s[i]) == alphb_cip[j]){
-                if (isupper(input_s[i])){
-                    message.push_back(toupper(alphb_real[j]));
-                }
-                else{
-                    message.push_back(alphb_real[j]);
-                }
+        else{
+            if (isupper(input_s[i])){
+                message.push_back(toupper(alphb_cip[tolower(input_s[i])]));
             }
+            else{
+                message.push_back(alphb_cip[input_s[i]]);
+            }
+            
         }
     }
     return message;
@@ -64,27 +88,27 @@ std::string cipher(std::string input_s, std::string alphb_real, std::string alph
 
 
 // based on the real and shifted alphabet, decipher a message
-std::string decipher(std::string input_s, std::string alphb_real, std::string alphb_cip){
-    std::string message;
+// std::string decipher(std::string input_s, std::string alphb_real, std::string alphb_cip){
+//     std::string message;
 
-    for (int i=0; i<input_s.size(); i++){
-        if (ispunct(input_s[i]) || isspace(input_s[i]) || isdigit(input_s[i])){
-            message.push_back(input_s[i]);
-        }
+//     for (int i=0; i<input_s.size(); i++){
+//         if (ispunct(input_s[i]) || isspace(input_s[i]) || isdigit(input_s[i])){
+//             message.push_back(input_s[i]);
+//         }
 
-        for (int j=0; j<alphb_real.size(); j++){
-            if (tolower(input_s[i]) == alphb_real[j]){
-                if (isupper(input_s[i])){
-                    message.push_back(toupper(alphb_cip[j]));
-                }
-                else{
-                    message.push_back(alphb_cip[j]);
-                }
-            }
-        }
-    }
-    return message;
-}
+//         for (int j=0; j<alphb_real.size(); j++){
+//             if (tolower(input_s[i]) == alphb_real[j]){
+//                 if (isupper(input_s[i])){
+//                     message.push_back(toupper(alphb_cip[j]));
+//                 }
+//                 else{
+//                     message.push_back(alphb_cip[j]);
+//                 }
+//             }
+//         }
+//     }
+//     return message;
+// }
 
 
 // take an input string

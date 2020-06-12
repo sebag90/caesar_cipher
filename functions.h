@@ -4,14 +4,17 @@
 
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 
 
 void show_options();
 
-std::string create_alphabet(std::string v, int k);
+std::unordered_map <char, char> create_cipher_alphabet(std::string v, int k);
 
-std::string cipher(std::string input_s, std::string alphb_real, std::string alphb_cip);
+std::unordered_map <char, char> create_decipher_alphabet(std::string v, int k);
+
+std::string cipher(std::string input_s, std::unordered_map <char, char> alphb_cip);
 
 std::string decipher(std::string input_s, std::string alphb_real, std::string alphb_cip);
 

@@ -52,20 +52,21 @@ int main(int argc, char *argv[]){
                 }
 
                 int key = take_input_key(key_limit);
-                std::string cipher_alphabet = create_alphabet(actual_alphabet, key);
+                std::unordered_map <char, char> cipher_alphabet = create_cipher_alphabet(actual_alphabet, key);
+                std::unordered_map <char, char> decipher_alphabet = create_decipher_alphabet(actual_alphabet, key);
 
                 // cipher or decipher based on user's choice
                 if (std::string_view(argv[1]) == "--cipher" ||
                     std::string_view(argv[1]) == "-c"){
                         
-                    std::string output = cipher(input_string, actual_alphabet, cipher_alphabet);
+                    std::string output = cipher(input_string, cipher_alphabet);
                     std::cout << output << "\n\n";
                 }
 
                 else if (std::string_view(argv[1]) == "--decipher" ||
                          std::string_view(argv[1]) == "-d"){
                              
-                    std::string output = decipher(input_string, actual_alphabet, cipher_alphabet);
+                    std::string output = cipher(input_string, decipher_alphabet);
                     std::cout << output << "\n\n";
                 }
             }
@@ -89,7 +90,8 @@ int main(int argc, char *argv[]){
                 }
 
                 int key = take_input_key(key_limit);
-                std::string cipher_alphabet = create_alphabet(actual_alphabet, key);
+                std::unordered_map <char, char> cipher_alphabet = create_cipher_alphabet(actual_alphabet, key);
+                std::unordered_map <char, char> decipher_alphabet = create_decipher_alphabet(actual_alphabet, key);
                 
                 // cipher or decipher every file in the input order using the selected key
                 for (auto x : my_files){
@@ -97,11 +99,11 @@ int main(int argc, char *argv[]){
                     std::string ciphred_input;
 
                     if (cipher_file_choice.find(argv[1]) != cipher_file_choice.end()){
-                        ciphred_input = cipher(input_string, actual_alphabet, cipher_alphabet);
+                        ciphred_input = cipher(input_string, cipher_alphabet);
                     }
 
                     else if (decipher_file_choice.find(argv[1]) != decipher_file_choice.end()){
-                        ciphred_input = decipher(input_string, actual_alphabet, cipher_alphabet);
+                        ciphred_input = cipher(input_string, decipher_alphabet);
                     }
 
                     save_file(x, ciphred_input, "./output/");
@@ -134,17 +136,18 @@ int main(int argc, char *argv[]){
                     
                     // try every key and save pairs of <frequency, key> in a vector
                     for (int i = 0; i < 26; i++){
-                        std::string ciphred_alphabet = create_alphabet(actual_alphabet, i);
-                        std::string deciphred_output = decipher(input_string, actual_alphabet, ciphred_alphabet);
+                        std::unordered_map <char, char> ciphred_alphabet = create_decipher_alphabet(actual_alphabet, i);
+                        std::string deciphred_output = cipher(input_string, ciphred_alphabet);
                         std::string frequency_input = calculate_letter_frequecy(deciphred_output, actual_alphabet);
                         int distance = levenshtein(eng_letter_frequency, frequency_input);
                         results.push_back(std::make_pair(distance, i));
+                        std::cout << "finished language analysis " << i+1 << " of " << 26 << std::endl;
                     }
 
                     // sort vector, the first result (smallest levenshtein distance) is the right key to decipher
                     std::sort(results.begin(), results.end());
-                    std::string ciphred_alphabet = create_alphabet(actual_alphabet, results[0].second);
-                    std::string real_result = decipher(input_string, actual_alphabet, ciphred_alphabet);
+                    std::unordered_map <char, char> ciphred_alphabet = create_decipher_alphabet(actual_alphabet, results[0].second);
+                    std::string real_result = cipher(input_string, ciphred_alphabet);
                     save_file(x, real_result, "./output/");
                 }
 
