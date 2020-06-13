@@ -302,7 +302,7 @@ std::vector <std::pair <int, std::string>> language_analysis (int start, int end
             best_i = distance;
             best_text = deciphred_output;
         }
-        std::cout << "finished language analysis " << i+1 << " of " << 26 << std::endl;
+        std::cout << "analysing..." << std::endl;//"finished language analysis " << i+1 << " of " << 26 << std::endl;
     }
 
     result.push_back(std::make_pair(best_i, best_text));
