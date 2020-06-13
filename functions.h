@@ -36,4 +36,6 @@ std::string calculate_letter_frequecy(std::string input_string, std::string alph
 
 int levenshtein (std::string string1, std::string string2);
 
+std::vector <std::pair <int, std::string>> language_analysis (int start, int end, std::string real_alphabet, std::string input);
+
 #endif 

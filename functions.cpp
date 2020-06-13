@@ -284,3 +284,28 @@ int levenshtein (std::string string1, std::string string2){
     }
     return matrix[x - 1][y - 1];
 }
+
+
+// try every key and save pairs of <frequency, key> in a vector
+std::vector <std::pair <int, std::string>> language_analysis (int start, int end, std::string real_alphabet, std::string input){
+    std::string eng_letter_frequency = "etaoinsrhldcumfpgwybvkxjqz";
+    std::string best_text;
+    int best_i = 100;
+    std::vector <std::pair <int, std::string>>  result;
+
+    for (int i = start; i < end; i++){
+        std::unordered_map <char, char> ciphred_alphabet = create_decipher_alphabet(real_alphabet, i);
+        std::string deciphred_output = cipher(input, ciphred_alphabet);
+        std::string frequency_input = calculate_letter_frequecy(deciphred_output, real_alphabet);
+        int distance = levenshtein(eng_letter_frequency, frequency_input);
+        if (distance < best_i){
+            best_i = distance;
+            best_text = deciphred_output;
+        }
+        std::cout << "finished language analysis " << i+1 << " of " << 26 << std::endl;
+    }
+
+    result.push_back(std::make_pair(best_i, best_text));
+    return result;
+
+}

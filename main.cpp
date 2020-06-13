@@ -4,7 +4,8 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <algorithm>
-
+#include <thread>
+#include <future>
 
 #include "functions.h"
 
@@ -128,27 +129,42 @@ int main(int argc, char *argv[]){
                 if (check_directories("output") == false){
                     create_directories("output");
                 }
-
+                std::string actual_alphabet = "abcdefghijklmnopqrstuvwxyz";
                 for (auto x : my_files){
                     std::string input_string = read_file(x, "./input/");
-                    std::string eng_letter_frequency = "etaoinsrhldcumfpgwybvkxjqz";
-                    std::vector <std::pair <int, int>> results;
-                    std::string best_text;
-                    int best_i = 100;
+                    // std::string eng_letter_frequency = "etaoinsrhldcumfpgwybvkxjqz";
                     
-                    // try every key and save pairs of <frequency, key> in a vector
-                    for (int i = 0; i < 26; i++){
-                        std::unordered_map <char, char> ciphred_alphabet = create_decipher_alphabet(actual_alphabet, i);
-                        std::string deciphred_output = cipher(input_string, ciphred_alphabet);
-                        std::string frequency_input = calculate_letter_frequecy(deciphred_output, actual_alphabet);
-                        int distance = levenshtein(eng_letter_frequency, frequency_input);
-                        if (distance < best_i){
-                            best_i = distance;
-                            best_text = deciphred_output;
-                        }
-                        std::cout << "finished language analysis " << i+1 << " of " << 26 << std::endl;
-                    }
+                    std::string best_text;
+                    // int best_i = 100;
 
+
+                    auto t1 = std::async(language_analysis, 0, 8, actual_alphabet, input_string);
+                    auto t2 = std::async(language_analysis, 8, 17, actual_alphabet, input_string);
+                    auto t3 = std::async(language_analysis, 17, 26, actual_alphabet, input_string);
+                    //auto t4 = std::async(language_analysis, 21, 26, actual_alphabet, input_string);
+                    
+
+                    std::vector <std::vector <std::pair <int, std::string>>> vec_of_vecs;
+
+                    std::vector <std::pair <int, std::string>> vect1 = t1.get();
+                    std::vector <std::pair <int, std::string>> vect2 = t2.get();
+                    std::vector <std::pair <int, std::string>> vect3 = t3.get();
+                    //std::vector <std::pair <int, std::string>> vect4 = t4.get();
+        
+                    vec_of_vecs.push_back(vect1);
+                    vec_of_vecs.push_back(vect2);
+                    vec_of_vecs.push_back(vect3);
+                    //vec_of_vecs.push_back(vect4);
+
+
+                    int lowest_i = 100;
+
+                    for (auto vec: vec_of_vecs){
+                        if( vec[0].first <= lowest_i){
+                            best_text = vec[0].second;
+                        }
+                    }
+                    //best_text = vect1[0].second;
                     // sort vector, the first result (smallest levenshtein distance) is the right key to decipher
                     // std::sort(results.begin(), results.end());
                     // std::unordered_map <char, char> ciphred_alphabet = create_decipher_alphabet(actual_alphabet, results[0].second);
