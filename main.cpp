@@ -10,6 +10,9 @@
 #include "functions.h"
 
 
+#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+#define PBWIDTH 60
+
 int main(int argc, char *argv[]){
 
     // https://www.bfilipek.com/2019/04/dir-iterate.html#using-c17
@@ -136,34 +139,47 @@ int main(int argc, char *argv[]){
                     
                     std::string best_text;
                     // int best_i = 100;
+                    double update = 0;
 
-
-                    auto t1 = std::async(language_analysis, 0, 8, actual_alphabet, input_string);
-                    auto t2 = std::async(language_analysis, 8, 17, actual_alphabet, input_string);
-                    auto t3 = std::async(language_analysis, 17, 26, actual_alphabet, input_string);
-                    //auto t4 = std::async(language_analysis, 21, 26, actual_alphabet, input_string);
-                    
+                    auto t1 = std::async(language_analysis, 0, 3, actual_alphabet, input_string);
+                    auto t2 = std::async(language_analysis, 3, 6, actual_alphabet, input_string);
+                    auto t3 = std::async(language_analysis, 6, 9, actual_alphabet, input_string);
+                    auto t4 = std::async(language_analysis, 9, 12, actual_alphabet, input_string);
+                    auto t5 = std::async(language_analysis, 12, 16, actual_alphabet, input_string);
+                    auto t6 = std::async(language_analysis, 16, 19, actual_alphabet, input_string);
+                    auto t7 = std::async(language_analysis, 19, 22, actual_alphabet, input_string);
+                    auto t8 = std::async(language_analysis, 22, 26, actual_alphabet, input_string);
 
                     std::vector <std::vector <std::pair <int, std::string>>> vec_of_vecs;
 
                     std::vector <std::pair <int, std::string>> vect1 = t1.get();
                     std::vector <std::pair <int, std::string>> vect2 = t2.get();
                     std::vector <std::pair <int, std::string>> vect3 = t3.get();
-                    //std::vector <std::pair <int, std::string>> vect4 = t4.get();
+                    std::vector <std::pair <int, std::string>> vect4 = t4.get();
+                    std::vector <std::pair <int, std::string>> vect5 = t5.get();
+                    std::vector <std::pair <int, std::string>> vect6 = t6.get();
+                    std::vector <std::pair <int, std::string>> vect7 = t7.get();
+                    std::vector <std::pair <int, std::string>> vect8 = t8.get();
         
                     vec_of_vecs.push_back(vect1);
                     vec_of_vecs.push_back(vect2);
                     vec_of_vecs.push_back(vect3);
-                    //vec_of_vecs.push_back(vect4);
-
+                    vec_of_vecs.push_back(vect4);
+                    vec_of_vecs.push_back(vect5);
+                    vec_of_vecs.push_back(vect6);
+                    vec_of_vecs.push_back(vect7);
+                    vec_of_vecs.push_back(vect8);
 
                     int lowest_i = 100;
 
-                    for (auto vec: vec_of_vecs){
+                    for (auto vec: vec_of_vecs){    
                         if( vec[0].first <= lowest_i){
                             best_text = vec[0].second;
+                            lowest_i = vec[0].first;
                         }
                     }
+
+      
                     //best_text = vect1[0].second;
                     // sort vector, the first result (smallest levenshtein distance) is the right key to decipher
                     // std::sort(results.begin(), results.end());
