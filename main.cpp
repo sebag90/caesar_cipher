@@ -133,6 +133,8 @@ int main(int argc, char *argv[]){
                     std::string input_string = read_file(x, "./input/");
                     std::string eng_letter_frequency = "etaoinsrhldcumfpgwybvkxjqz";
                     std::vector <std::pair <int, int>> results;
+                    std::string best_text;
+                    int best_i = 100;
                     
                     // try every key and save pairs of <frequency, key> in a vector
                     for (int i = 0; i < 26; i++){
@@ -140,15 +142,18 @@ int main(int argc, char *argv[]){
                         std::string deciphred_output = cipher(input_string, ciphred_alphabet);
                         std::string frequency_input = calculate_letter_frequecy(deciphred_output, actual_alphabet);
                         int distance = levenshtein(eng_letter_frequency, frequency_input);
-                        results.push_back(std::make_pair(distance, i));
+                        if (distance < best_i){
+                            best_i = distance;
+                            best_text = deciphred_output;
+                        }
                         std::cout << "finished language analysis " << i+1 << " of " << 26 << std::endl;
                     }
 
                     // sort vector, the first result (smallest levenshtein distance) is the right key to decipher
-                    std::sort(results.begin(), results.end());
-                    std::unordered_map <char, char> ciphred_alphabet = create_decipher_alphabet(actual_alphabet, results[0].second);
-                    std::string real_result = cipher(input_string, ciphred_alphabet);
-                    save_file(x, real_result, "./output/");
+                    // std::sort(results.begin(), results.end());
+                    // std::unordered_map <char, char> ciphred_alphabet = create_decipher_alphabet(actual_alphabet, results[0].second);
+                    // std::string real_result = cipher(input_string, ciphred_alphabet);
+                    save_file(x, best_text, "./output/");
                 }
 
                 std::cout << "All input files have been succesfully processed" << std::endl;
