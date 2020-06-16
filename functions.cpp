@@ -10,8 +10,7 @@
 #include <algorithm>
 #include <fstream>
 
-#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-#define PBWIDTH 60
+
 
 // show programme parameters
 void show_options(){
@@ -288,26 +287,26 @@ int levenshtein (std::string string1, std::string string2){
 }
 
 
+void printProgBar( double percent ) {
+    std::string bar;
 
+    for(int i = 0; i < 50; i++){
+        if( i < (percent/2)){
+        bar.replace(i,1,"=");
+        }
+    else if( i == (percent/2)){
+        bar.replace(i,1,">");
+        }
+    else{
+        bar.replace(i,1," ");
+        }
+    }
 
-
-
-void printProgress(double percentage) {
-    int val = (int) (percentage * 100);
-    int lpad = (int) (percentage * PBWIDTH);
-    int rpad = PBWIDTH - lpad;
-    printf("\r%3d%% [%.*s%*s]", val, lpad, PBSTR, rpad, "");
-    //fflush(stdout);
+    std::cout<< "\r" "[" << bar << "] ";
+    std::cout.width( 3 );
+    std::cout<< percent << "%     " << std::flush;
 }
 
-
-double update_bar(double update){
-    double step = 1 / 26;
-    update = update + step;
-    printProgress(update);
-    std::cout << std::endl;
-    return update;
-}
 
 
 // try every key and save pairs of <frequency, key> in a vector
@@ -326,8 +325,9 @@ std::vector <std::pair <int, std::string>> language_analysis (int start, int end
             best_i = distance;
             best_text = deciphred_output;
         }
-
-        std::cout << "analysing..." << std::endl;//"finished language analysis " << i+1 << " of " << 26 << std::endl;
+        float percent = (i / (float) end)* (float) 100;
+        printProgBar(percent);
+        //std::cout << "analysing..." << std::endl;//"finished language analysis " << i+1 << " of " << 26 << std::endl;
     }
 
     result.push_back(std::make_pair(best_i, best_text));

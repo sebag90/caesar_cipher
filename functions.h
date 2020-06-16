@@ -6,8 +6,6 @@
 #include <string>
 #include <unordered_map>
 
-#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-#define PBWIDTH 60
 
 void show_options();
 
@@ -39,6 +37,6 @@ int levenshtein (std::string string1, std::string string2);
 
 std::vector <std::pair <int, std::string>> language_analysis (int start, int end, std::string real_alphabet, std::string input);
 
-void printProgress(double percentage);
+void printProgBar(double percent);
 
 #endif 

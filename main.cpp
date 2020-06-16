@@ -10,9 +10,6 @@
 #include "functions.h"
 
 
-#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-#define PBWIDTH 60
-
 int main(int argc, char *argv[]){
 
     // https://www.bfilipek.com/2019/04/dir-iterate.html#using-c17
@@ -187,6 +184,9 @@ int main(int argc, char *argv[]){
                     // std::string real_result = cipher(input_string, ciphred_alphabet);
                     save_file(x, best_text, "./output/");
                 }
+
+                printProgBar(100);
+	            std::cout << std::endl;
 
                 std::cout << "All input files have been succesfully processed" << std::endl;
             }
