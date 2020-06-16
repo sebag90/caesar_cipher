@@ -287,7 +287,7 @@ int levenshtein (std::string string1, std::string string2){
 }
 
 
-void printProgBar( double percent ) {
+void printProgBar( int percent ) {
     std::string bar;
 
     for(int i = 0; i < 50; i++){

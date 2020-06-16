@@ -129,8 +129,10 @@ int main(int argc, char *argv[]){
                 if (check_directories("output") == false){
                     create_directories("output");
                 }
+                int file_counter = 1;
                 std::string actual_alphabet = "abcdefghijklmnopqrstuvwxyz";
                 for (auto x : my_files){
+                    
                     std::string input_string = read_file(x, "./input/");
                     // std::string eng_letter_frequency = "etaoinsrhldcumfpgwybvkxjqz";
                     
@@ -183,10 +185,13 @@ int main(int argc, char *argv[]){
                     // std::unordered_map <char, char> ciphred_alphabet = create_decipher_alphabet(actual_alphabet, results[0].second);
                     // std::string real_result = cipher(input_string, ciphred_alphabet);
                     save_file(x, best_text, "./output/");
+                    printProgBar(100);
+	                std::cout << std::endl;
+                    std::cout << "File " << file_counter << " of " << my_files.size() << " completed\n" << std::endl;
+                    file_counter = file_counter + 1;
                 }
 
-                printProgBar(100);
-	            std::cout << std::endl;
+                
 
                 std::cout << "All input files have been succesfully processed" << std::endl;
             }
