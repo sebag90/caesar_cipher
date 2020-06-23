@@ -37,6 +37,6 @@ int levenshtein (std::string string1, std::string string2);
 
 std::vector <std::pair <int, std::string>> language_analysis (int start, int end, std::string real_alphabet, std::string input);
 
-void printProgBar(int percent);
+void print_progbar(int percent);
 
 #endif 

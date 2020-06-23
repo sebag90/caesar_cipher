@@ -287,24 +287,24 @@ int levenshtein (std::string string1, std::string string2){
 }
 
 
-void printProgBar( int percent ) {
+void print_progbar(int percent) {
     std::string bar;
 
     for(int i = 0; i < 50; i++){
-        if( i < (percent/2)){
-        bar.replace(i,1,"=");
+        if( i < (percent / 2)){
+            bar.replace(i,1,"=");
         }
-    else if( i == (percent/2)){
-        bar.replace(i,1,">");
+        else if( i == (percent / 2)){
+            bar.replace(i,1,">");
         }
-    else{
-        bar.replace(i,1," ");
+        else{
+            bar.replace(i,1," ");
         }
     }
 
-    std::cout<< "\r" "[" << bar << "] ";
+    std::cout << "\r" "[" << bar << "] ";
     std::cout.width( 3 );
-    std::cout<< percent << "%     " << std::flush;
+    std::cout << percent << "%     " << std::flush;
 }
 
 
@@ -326,7 +326,7 @@ std::vector <std::pair <int, std::string>> language_analysis (int start, int end
             best_text = deciphred_output;
         }
         float percent = (i / (float) end)* (float) 100;
-        printProgBar(percent);
+        print_progbar(percent);
         //std::cout << "analysing..." << std::endl;//"finished language analysis " << i+1 << " of " << 26 << std::endl;
     }
 
