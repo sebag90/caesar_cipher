@@ -11,3 +11,4 @@ caesar_cipher/input/1
 main
 ccipher
 .vscode/*
+output/*
