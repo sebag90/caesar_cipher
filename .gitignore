@@ -10,4 +10,4 @@ caesar_cipher/input/2
 caesar_cipher/input/1
 main
 ccipher
-.vscode
+.vscode/*
