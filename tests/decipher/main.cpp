@@ -2,7 +2,7 @@
 #include <boost/test/included/unit_test.hpp>
 #include <string>
 #include <unordered_map>
-#include "../../functions.h"
+#include "../../src/functions.h"
 
 
 namespace tt = boost::test_tools;

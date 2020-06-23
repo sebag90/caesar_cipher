@@ -1,7 +1,7 @@
 #define BOOST_TEST_MODULE boost_test_macro_overview
 #include <boost/test/included/unit_test.hpp>
 #include <string>
-#include "../../functions.h"
+#include "../../src/functions.h"
 
 namespace tt = boost::test_tools;
 

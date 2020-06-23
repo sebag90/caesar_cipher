@@ -1,8 +1,8 @@
-Output_filename = main
+Output_filename = ccipher
 Compiler = g++
 Library = std=c++17 
-main_file = main.cpp
-functions = functions.cpp
+main_file = src/main.cpp
+functions = src/functions.cpp
 
 all:clean
 	$(Compiler) -$(Library) -pthread $(main_file) $(functions) -o $(Output_filename)
