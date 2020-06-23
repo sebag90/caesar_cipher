@@ -6,6 +6,9 @@ functions = functions.cpp
 
 all:clean
 	$(Compiler) -$(Library) -pthread $(main_file) $(functions) -o $(Output_filename)
+
+raspi:clean
+	clang++-9 -$(Library) -pthread $(main_file) $(functions) -o $(Output_filename) -lstdc++fs
 	
 
 clean:
