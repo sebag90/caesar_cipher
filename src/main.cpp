@@ -12,10 +12,6 @@
 
 int main(int argc, char *argv[]){
 
-    // https://www.bfilipek.com/2019/04/dir-iterate.html#using-c17
-    // https://en.cppreference.com/w/cpp/filesystem/directory_iterator
-
-
     if (check_directories("input") == false){
         create_directories("input");
     }
@@ -183,11 +179,13 @@ int main(int argc, char *argv[]){
                 std::cout << "All input files have been succesfully processed" << std::endl;
             }
         }
+        
         else{
             std::cout << "Function not supported" << std::endl;
             show_options();
         }
     }
+
     else{
         std::cout << "Function not supported" << std::endl;
         show_options();
