@@ -1,7 +1,7 @@
 Github: https://github.com/sebag90/caesar_cipher
 
 # CAESAR CIPHER:
-This program uses one of the easiest encryption technique to cipher and decipher a message.
+This program uses one of the easiest encryption techniques to cipher and decipher a message.
 Based on a key, each letter is shifted down the alphabet.
 
 ### Example:
