@@ -16,11 +16,11 @@
 void show_options(){
     std::cout   << "Options:\n"
                 << "\t-h, --help\t\tshow this message and exit\n"
-                << "\t-c, --cipher\t\tencode a message in interactive mode\n"
-                << "\t-d, --decipher\t\tdecode a message in interactive mode\n"
-                << "\t-cf, --cipher -f\tencode files in input folder\n"
-                << "\t-df, --decipher -f\tdecode files in input folder\n"
-                << "\t-bf, --bruteforce\tcrack ciphred files in input folder"
+                << "\t-c, --cipher\t\tcipher a message in interactive mode\n"
+                << "\t-d, --decipher\t\tdecipher a message in interactive mode\n"
+                << "\t-cf, --cipher -f\tcipher files in input folder\n"
+                << "\t-df, --decipher -f\tdecipher files in input folder\n"
+                << "\t-bf, --bruteforce\tcrack ciphered files in input folder"
                 << std::endl << std::endl;
 }
 
@@ -86,31 +86,6 @@ std::string cipher(std::string input_s, std::unordered_map <char, char> alphb_ci
     }
     return message;
 }
-
-
-// based on the real and shifted alphabet, decipher a message
-// std::string decipher(std::string input_s, std::string alphb_real, std::string alphb_cip){
-//     std::string message;
-
-//     for (int i=0; i<input_s.size(); i++){
-//         if (ispunct(input_s[i]) || isspace(input_s[i]) || isdigit(input_s[i])){
-//             message.push_back(input_s[i]);
-//         }
-
-//         for (int j=0; j<alphb_real.size(); j++){
-//             if (tolower(input_s[i]) == alphb_real[j]){
-//                 if (isupper(input_s[i])){
-//                     message.push_back(toupper(alphb_cip[j]));
-//                 }
-//                 else{
-//                     message.push_back(alphb_cip[j]);
-//                 }
-//             }
-//         }
-//     }
-//     return message;
-// }
-
 
 // take an input string
 std::string take_input_string(){
@@ -327,7 +302,6 @@ std::vector <std::pair <int, std::string>> language_analysis (int start, int end
         }
         float percent = (i / (float) end)* (float) 100;
         print_progbar(percent);
-        //std::cout << "analysing..." << std::endl;//"finished language analysis " << i+1 << " of " << 26 << std::endl;
     }
 
     result.push_back(std::make_pair(best_i, best_text));

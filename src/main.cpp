@@ -85,7 +85,7 @@ int main(int argc, char *argv[]){
             }
 
             else{
-                // check if directories exist and take key to gorm a cipher alphabet
+                // check if directories exist and take key (user input) to form a cipher alphabet
                 if (check_directories("output") == false){
                     create_directories("output");
                 }
@@ -134,12 +134,7 @@ int main(int argc, char *argv[]){
                 for (auto x : my_files){
                     
                     std::string input_string = read_file(x, "./input/");
-                    // std::string eng_letter_frequency = "etaoinsrhldcumfpgwybvkxjqz";
                     
-                    std::string best_text;
-                    // int best_i = 100;
-                    double update = 0;
-
                     auto t1 = std::async(language_analysis, 0, 3, actual_alphabet, input_string);
                     auto t2 = std::async(language_analysis, 3, 6, actual_alphabet, input_string);
                     auto t3 = std::async(language_analysis, 6, 9, actual_alphabet, input_string);
@@ -170,6 +165,7 @@ int main(int argc, char *argv[]){
                     vec_of_vecs.push_back(vect8);
 
                     int lowest_i = 100;
+                    std::string best_text;
 
                     for (auto vec: vec_of_vecs){    
                         if( vec[0].first <= lowest_i){
@@ -177,32 +173,21 @@ int main(int argc, char *argv[]){
                             lowest_i = vec[0].first;
                         }
                     }
-
-      
-                    //best_text = vect1[0].second;
-                    // sort vector, the first result (smallest levenshtein distance) is the right key to decipher
-                    // std::sort(results.begin(), results.end());
-                    // std::unordered_map <char, char> ciphred_alphabet = create_decipher_alphabet(actual_alphabet, results[0].second);
-                    // std::string real_result = cipher(input_string, ciphred_alphabet);
+                
                     save_file(x, best_text, "./output/");
                     print_progbar(100);
 	                std::cout << std::endl;
-                    std::cout << "File " << file_counter << " of " << my_files.size() << " completed\n" << std::endl;
+                    std::cout << "File " << file_counter << " of " << my_files.size() << " completed\n" <<  std::endl;
                     file_counter = file_counter + 1;
                 }
-
-                
-
                 std::cout << "All input files have been succesfully processed" << std::endl;
             }
         }
-       
         else{
             std::cout << "Function not supported" << std::endl;
             show_options();
         }
     }
-
     else{
         std::cout << "Function not supported" << std::endl;
         show_options();
