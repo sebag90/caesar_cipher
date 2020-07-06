@@ -22,7 +22,7 @@ brute force and letter frequency analysis given that the file is long enough.
 g++ is the standard compiler, you can modify it in the makefile.  
 An executable named ccipher will be created. 
 
-### commands: 
+### Commands: 
 
 - make
 - make raspi (for raspberry pi)
