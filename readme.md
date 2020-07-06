@@ -19,7 +19,7 @@ brute force and letter frequency analysis given that the file is long enough.
 - Boost for testing: https://www.boost.org/
 
 ## Build:
-g++ is the standard compiler, you can modify it in the makefile.
+g++ is the standard compiler, you can modify it in the makefile.  
 An executable named ccipher will be created. 
 
 ### commands: 
