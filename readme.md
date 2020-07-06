@@ -36,6 +36,5 @@ An executable named ccipher will be created.
 
 
 
-source input files (test1.txt, test2.txt, test3.txt, test4.txt): 
-
+source input files (test1.txt, test2.txt, test3.txt, test4.txt):  
 https://github.com/shekharkoirala/Game_of_Thrones
